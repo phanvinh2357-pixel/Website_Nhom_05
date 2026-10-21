@@ -1,0 +1,11 @@
+﻿@using Website_Nhom_05.Models
+@model List<ThuongHieu>
+
+<ul class="ws-dropdown-menu">
+    @foreach (var th in Model)
+    {
+        <li>
+            @Html.ActionLink(th.TenThuongHieu, "DongHoTheoThuongHieu", "DongHo", new { id = th.MaThuongHieu }, new { @class = "ws-dropdown-item" })
+        </li>
+    }
+</ul>

@@ -1,0 +1,8 @@
+﻿@{
+    int soLuong = ViewBag.SoLuongGioHang ?? 0;
+}
+<a href="@Url.Action("GioHang", "GioHang")" class="ws-cart-link" title="Xem giỏ hàng">
+    <img src="@Url.Content("~/Content/HinhAnhSP/shopping-bag.png")" class="ws-icon-img" alt="Giỏ hàng" />
+    <span class="ws-cart-text">Giỏ hàng</span>
+    <span class="ws-cart-badge">@soLuong</span>
+</a>

@@ -1,0 +1,12 @@
+﻿@using Website_Nhom_05.Models
+@model List<LoaiDongHo>
+
+@foreach (var item in Model)
+{
+    <li class="ws-nav-item">
+        <a href="@Url.Action("DongHoTheoLoai", "DongHo", new { id = item.MaLoai })" class="ws-nav-link">
+            @item.TenLoai
+            <img src="@Url.Content("~/Content/HinhAnhSP/chevron-down.png")" class="ws-arrow-down-img" alt="▾" />
+        </a>
+    </li>
+}

@@ -1,0 +1,976 @@
+﻿/* ==========================================================================
+   WATCH STORE - LUXURY HOMEPAGE STYLESHEET (BẢN FULL HOÀN CHỈNH)
+   ========================================================================== */
+
+:root {
+    --ws-bg: #FFFFFF;
+    --ws-bg-alt: #FBFBFA;
+    --ws-text-main: #1A1A1A;
+    --ws-text-muted: #737373;
+    /* Hệ màu vàng kim chủ đạo */
+    --ws-gold: #D4AF37;
+    --ws-gold-btn: #D4AF37;
+    --ws-gold-hover: #BA9624;
+    --ws-gold-light: #F0DC82;
+    --ws-border: #EEEEEE;
+    --ws-font-serif: 'Playfair Display', Georgia, serif;
+    --ws-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--ws-font-sans);
+    background-color: var(--ws-bg);
+    color: var(--ws-text-main);
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+ul {
+    list-style: none;
+}
+
+/* ================= 1. BỐ CỤC KHUNG CHỨA TOÀN TRANG ================= */
+.ws-container {
+    max-width: 1680px;
+    margin: 0 auto;
+    padding: 0 40px; /* Lề đệm 40px đồng bộ dùng chung cho Header, Thân trang và Footer */
+}
+
+.text-center {
+    text-align: center;
+}
+
+/* ================= 2. HEADER & TOP BAR ================= */
+.ws-header {
+    background: #FFFFFF;
+    border-bottom: 1px solid var(--ws-border);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.ws-header-top-wrap {
+    width: 100%;
+}
+
+.ws-header-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 16px;
+    padding-bottom: 16px;
+    gap: 30px;
+}
+
+/* Logo thương hiệu kèm khung [ W ] */
+.ws-logo-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ws-logo-box {
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--ws-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 2px;
+    overflow: hidden;
+    background-color: #FFF;
+}
+
+    .ws-logo-box img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+.ws-logo-badge-fallback {
+    font-family: var(--ws-font-serif);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--ws-gold);
+    line-height: 1;
+}
+
+.ws-logo-box-dark {
+    background-color: #222;
+    border-color: #444;
+}
+
+.ws-logo-text {
+    display: flex;
+    flex-direction: column;
+}
+
+.ws-logo-title {
+    font-family: var(--ws-font-serif);
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    color: #111;
+    line-height: 1.1;
+}
+
+.ws-logo-subtitle {
+    font-size: 9.5px;
+    letter-spacing: 3.5px;
+    color: var(--ws-gold);
+    font-weight: 600;
+    margin-top: 3px;
+}
+
+/* Thanh tìm kiếm icon bên TRÁI */
+.ws-search-bar {
+    flex: 1;
+    max-width: 580px;
+    display: flex;
+    align-items: center;
+    border: 1px solid #D1D1CD;
+    border-radius: 4px;
+    padding: 10px 16px;
+    background: #FAFAFA;
+}
+
+.ws-search-icon-img {
+    width: 17px;
+    height: 17px;
+    object-fit: contain;
+    margin-right: 12px;
+    filter: brightness(0);
+    opacity: 0.75;
+    flex-shrink: 0;
+}
+
+.ws-search-bar input {
+    border: none;
+    background: transparent;
+    outline: none;
+    width: 100%;
+    font-size: 14px;
+    color: #222;
+}
+
+/* User & Cart Section */
+.ws-user-section {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+}
+
+.ws-auth-block {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    color: #222;
+    font-weight: 500;
+}
+
+.ws-user-icon-img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    margin-right: 8px;
+}
+
+.ws-auth-btn:hover,
+.ws-user-name:hover {
+    color: var(--ws-gold);
+}
+
+.ws-sep {
+    margin: 0 6px;
+    color: #CCC;
+}
+
+.ws-logout {
+    color: #B3392A;
+    font-size: 13px;
+}
+
+/* Nút Giỏ hàng tối giản */
+.ws-cart-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #222;
+    transition: all 0.2s;
+}
+
+    .ws-cart-link:hover {
+        border-color: #E0E0E0;
+        background-color: #F8F8F8;
+    }
+
+.ws-icon-img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+}
+
+.ws-cart-badge {
+    background: #EAEAEA;
+    color: #222;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 1px 7px;
+    border-radius: 12px;
+}
+
+/* ================= 3. NAVBAR NỀN TRẮNG ================= */
+.ws-nav-white {
+    background: #FFFFFF;
+    border-top: 1px solid var(--ws-border);
+}
+
+.ws-nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.ws-nav-menu {
+    display: flex;
+    align-items: center;
+}
+
+.ws-nav-link {
+    display: inline-flex;
+    align-items: center;
+    padding: 14px 22px 14px 0;
+    margin-right: 14px;
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #222222;
+}
+
+    .ws-nav-link:hover {
+        color: var(--ws-gold);
+    }
+
+/* Icon mũi tên thả xuống (chevron-down.png) */
+.ws-arrow-down-img {
+    width: 11px;
+    height: 11px;
+    object-fit: contain;
+    margin-left: 6px;
+    vertical-align: middle;
+    opacity: 0.7;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.ws-nav-link:hover .ws-arrow-down-img {
+    opacity: 1;
+}
+
+.ws-dropdown:hover .ws-arrow-down-img {
+    transform: rotate(180deg);
+}
+
+.ws-nav-commitment {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    color: var(--ws-gold);
+}
+
+/* Dropdown Menu */
+.ws-dropdown {
+    position: relative;
+}
+
+.ws-dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #FFFFFF;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    border: 1px solid var(--ws-border);
+    min-width: 190px;
+    display: none;
+    z-index: 999;
+}
+
+.ws-dropdown:hover .ws-dropdown-menu {
+    display: block;
+}
+
+.ws-dropdown-item {
+    display: block;
+    padding: 11px 20px;
+    font-size: 13px;
+    border-bottom: 1px solid #F5F5F5;
+}
+
+    .ws-dropdown-item:hover {
+        background: #FDFBF7;
+        color: var(--ws-gold);
+        padding-left: 24px;
+    }
+
+/* ================= 4. HERO BANNER ================= */
+.ws-hero-banner {
+    background-color: #111111;
+    color: #FFFFFF;
+    padding: 85px 0 75px;
+}
+
+.ws-hero-inner {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    align-items: center;
+    gap: 60px;
+}
+
+.ws-gold-dash-tag {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 11.5px;
+    letter-spacing: 2px;
+    font-weight: 600;
+    color: var(--ws-gold-light);
+    margin-bottom: 22px;
+}
+
+.ws-dash {
+    width: 24px;
+    height: 1.5px;
+    background-color: var(--ws-gold-light);
+    display: inline-block;
+}
+
+.ws-hero-heading {
+    font-family: var(--ws-font-serif);
+    font-size: 64px;
+    font-weight: 500;
+    line-height: 1.12;
+    margin-bottom: 24px;
+    letter-spacing: -0.5px;
+}
+
+.ws-hero-subtext {
+    font-size: 15px;
+    line-height: 1.75;
+    color: #B8B8B8;
+    max-width: 520px;
+    margin-bottom: 38px;
+}
+
+/* Nút Khám phá ngay màu vàng #D4AF37 */
+.ws-btn-hero {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    background-color: var(--ws-gold-btn);
+    color: #111111;
+    padding: 14px 30px;
+    font-size: 13.5px;
+    font-weight: 600;
+    border-radius: 2px;
+    transition: background-color 0.25s ease;
+}
+
+    .ws-btn-hero:hover {
+        background-color: var(--ws-gold-hover);
+        color: #000;
+    }
+
+.ws-btn-icon {
+    width: 15px;
+    height: 15px;
+    object-fit: contain;
+    filter: brightness(0);
+}
+
+
+.ws-hero-right {
+    text-align: right;
+    position: relative;
+}
+
+.ws-hero-watch-img {
+    max-width: 100%;
+    max-height: 480px;
+    object-fit: contain;
+    filter: drop-shadow(0 20px 45px rgba(0,0,0,0.75));
+}
+
+.ws-hero-caption {
+    font-size: 10.5px;
+    letter-spacing: 2px;
+    color: #777;
+    margin-top: 14px;
+    text-align: right;
+}
+
+/* ================= 5. PHONG CÁCH CỦA BẠN (3 CARDS) ================= */
+.ws-styles-section {
+    padding: 80px 0;
+    background-color: #FFFFFF;
+}
+
+.ws-block-title {
+    margin-bottom: 12px;
+}
+
+.ws-label-gold {
+    font-size: 11.5px;
+    letter-spacing: 2.5px;
+    color: var(--ws-gold);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+}
+
+.ws-heading-title {
+    font-family: var(--ws-font-serif);
+    font-size: 36px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #111;
+}
+
+.ws-desc-title {
+    font-size: 14.5px;
+    color: var(--ws-text-muted);
+}
+
+.ws-style-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    margin-top: 42px;
+}
+
+.ws-style-card {
+    position: relative;
+    height: 450px;
+    border-radius: 2px;
+    overflow: hidden;
+    display: block;
+    background-color: #111;
+}
+
+    /* Chỉ áp dụng cho ảnh nền của card */
+    .ws-style-card img.ws-style-bg-img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.6s ease;
+    }
+
+    .ws-style-card:hover img.ws-style-bg-img {
+        transform: scale(1.06);
+    }
+
+/* Lớp phủ chuyển màu gradient tối chân card */
+.ws-style-info {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.88) 0%, rgba(0, 0, 0, 0.25) 50%, transparent 100%);
+    color: #FFFFFF;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 28px 30px;
+    z-index: 2;
+}
+
+.ws-style-text {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.ws-style-name {
+    font-family: var(--ws-font-serif);
+    font-size: 28px;
+    font-weight: 500;
+    color: #FFFFFF;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.ws-style-desc {
+    font-size: 13.5px;
+    color: #CCCCCC;
+    margin: 0;
+}
+
+/* Cố định kích thước icon mũi tên nhỏ gọn góc phải */
+.ws-style-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 4px;
+}
+
+.ws-style-card .ws-corner-arrow-img {
+    width: 18px !important;
+    height: 18px !important;
+    max-width: 18px !important;
+    max-height: 18px !important;
+    object-fit: contain;
+    filter: brightness(0) invert(1);
+    display: block;
+    transition: transform 0.25s ease;
+}
+
+.ws-style-card:hover .ws-corner-arrow-img {
+    transform: translate(3px, -3px);
+}
+
+/* ================= 6. SẢN PHẨM BÁN CHẠY (GRID 4 CỘT) ================= */
+.ws-bestseller-section {
+    padding: 85px 0;
+    border-top: 1px solid var(--ws-border);
+}
+
+.ws-section-flex-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 36px;
+}
+
+.ws-all-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #111;
+    border-bottom: 1px solid #111;
+    padding-bottom: 2px;
+}
+
+    .ws-all-link:hover {
+        color: var(--ws-gold);
+        border-color: var(--ws-gold);
+    }
+
+.ws-link-icon {
+    width: 13px;
+    height: 13px;
+    object-fit: contain;
+}
+
+.ws-products-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 28px;
+}
+
+.ws-item-card {
+    border: 1px solid #EBEBEB;
+    background: #FFFFFF;
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.25s ease;
+}
+
+    .ws-item-card:hover {
+        border-color: #D4D4D4;
+        box-shadow: 0 12px 28px rgba(0,0,0,0.06);
+    }
+
+.ws-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 16px 0;
+}
+
+.ws-item-badge {
+    background-color: #1A1A1A;
+    color: #FFFFFF;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    padding: 3px 8px;
+}
+
+.ws-item-fav {
+    background: transparent;
+    border: none;
+    font-size: 15px;
+    color: #888;
+    cursor: pointer;
+}
+
+    .ws-item-fav:hover {
+        color: #D9534F;
+    }
+
+.ws-item-thumb {
+    height: 250px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    overflow: hidden;
+}
+
+    .ws-item-thumb img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+        transition: transform 0.35s ease;
+    }
+
+.ws-item-card:hover .ws-item-thumb img {
+    transform: scale(1.05);
+}
+
+.ws-item-details {
+    padding: 18px;
+    border-top: 1px solid #F5F5F5;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.ws-item-brand {
+    font-size: 10.5px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--ws-gold);
+    margin-bottom: 4px;
+}
+
+.ws-item-name {
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.35;
+    min-height: 42px;
+    margin-bottom: 6px;
+}
+
+    .ws-item-name a:hover {
+        color: var(--ws-gold);
+    }
+
+.ws-item-specs {
+    font-size: 12px;
+    color: var(--ws-text-muted);
+    margin-bottom: 10px;
+    min-height: 34px;
+}
+
+.ws-item-rating {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11.5px;
+    margin-bottom: 12px;
+}
+
+.ws-stars {
+    color: #E6B04D;
+    letter-spacing: 1px;
+}
+
+.ws-rate-score {
+    color: #888;
+}
+
+.ws-item-price {
+    font-size: 16.5px;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 14px;
+    margin-top: auto;
+}
+
+.ws-btn-addcart {
+    display: block;
+    text-align: center;
+    background-color: #141414;
+    color: #FFFFFF;
+    font-size: 12.5px;
+    font-weight: 600;
+    padding: 11px;
+    border-radius: 2px;
+    transition: all 0.25s ease;
+}
+
+    .ws-btn-addcart:hover {
+        background-color: #000000;
+        color: var(--ws-gold);
+        border: 1px solid var(--ws-gold);
+    }
+
+/* ================= 7. THANH CAM KẾT DỊCH VỤ (CĂN GIỮA) ================= */
+.ws-commit-bar {
+    background-color: #FFFFFF;
+    border-top: 1px solid var(--ws-border);
+    border-bottom: 1px solid var(--ws-border);
+    padding: 46px 0;
+}
+
+.ws-commit-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 80px;
+    flex-wrap: wrap;
+}
+
+.ws-commit-box {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.ws-commit-img-wrap {
+    width: 44px;
+    height: 44px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+    .ws-commit-img-wrap img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+.ws-commit-info h4 {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1A1A1A;
+    margin-bottom: 2px;
+}
+
+.ws-commit-info p {
+    font-size: 13px;
+    color: var(--ws-text-muted);
+}
+
+/* ================= 8. FOOTER ================= */
+.ws-footer {
+    background-color: #0E0E0E;
+    color: #A3A3A3;
+    padding-top: 75px;
+}
+
+.ws-footer-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr 1.3fr 1.2fr;
+    gap: 48px;
+    padding-bottom: 55px;
+    border-bottom: 1px solid #222222;
+}
+
+.ws-footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.text-white {
+    color: #FFFFFF !important;
+}
+
+.ws-footer-text {
+    font-size: 13px;
+    line-height: 1.6;
+    margin-bottom: 18px;
+    color: #888;
+}
+
+.ws-social-icons {
+    display: flex;
+    gap: 10px;
+}
+
+    .ws-social-icons a {
+        width: 34px;
+        height: 34px;
+        border: 1px solid #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 13px;
+        color: #BBB;
+    }
+
+        .ws-social-icons a:hover {
+            border-color: var(--ws-gold);
+            color: var(--ws-gold);
+        }
+
+.ws-col-title {
+    font-size: 13px;
+    font-weight: 700;
+    color: #FFFFFF;
+    margin-bottom: 18px;
+    letter-spacing: 0.5px;
+}
+
+.ws-col-list li {
+    font-size: 13px;
+    margin-bottom: 9px;
+}
+
+.ws-col-list a:hover {
+    color: #FFFFFF;
+    text-decoration: underline;
+}
+
+.ws-subscribe-form {
+    display: flex;
+    margin-bottom: 8px;
+}
+
+    .ws-subscribe-form input {
+        flex: 1;
+        padding: 10px 14px;
+        background: #1C1C1C;
+        border: 1px solid #333;
+        border-right: none;
+        color: #FFF;
+        font-size: 13px;
+        outline: none;
+    }
+
+    /* Nút Đăng ký màu #D4AF37 */
+    .ws-subscribe-form button {
+        background: var(--ws-gold-btn);
+        border: none;
+        padding: 0 18px;
+        font-size: 13px;
+        font-weight: 700;
+        color: #111;
+        cursor: pointer;
+        transition: background-color 0.25s ease;
+    }
+
+        .ws-subscribe-form button:hover {
+            background: var(--ws-gold-hover);
+        }
+
+.ws-note-text {
+    font-size: 11px;
+    color: #666;
+}
+
+.ws-footer-bar {
+    padding: 22px 0;
+    font-size: 12px;
+    color: #666;
+}
+
+.ws-bar-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ws-payment-types {
+    display: flex;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: #888;
+}
+
+/* ================= 9. RESPONSIVE BREAKPOINTS ================= */
+@media (max-width: 1200px) {
+    .ws-container {
+        padding: 0 24px;
+    }
+
+    .ws-products-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ws-style-grid,
+    .ws-footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ws-commit-flex {
+        gap: 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .ws-header-top {
+        flex-direction: column;
+        align-items: stretch;
+        padding-top: 14px;
+        padding-bottom: 14px;
+    }
+
+    .ws-search-bar {
+        max-width: 100%;
+    }
+
+    .ws-nav-container,
+    .ws-bar-flex {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .ws-hero-inner {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .ws-hero-heading {
+        font-size: 44px;
+    }
+
+    .ws-hero-right {
+        text-align: center;
+    }
+
+    .ws-slider-indicators {
+        justify-content: center;
+    }
+
+    .ws-products-grid,
+    .ws-style-grid,
+    .ws-commit-flex,
+    .ws-footer-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ws-style-card {
+        height: 380px;
+    }
+
+    .ws-commit-flex {
+        align-items: flex-start;
+        gap: 24px;
+    }
+}

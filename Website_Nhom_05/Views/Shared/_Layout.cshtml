@@ -1,0 +1,170 @@
+﻿@using Website_Nhom_05.Models
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title - WATCH STORE | THE ART OF TIME</title>
+    <!-- Google Fonts & FontAwesome -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <!-- Gọi trực tiếp file style.css nằm trong Content/css/ -->
+    <link rel="stylesheet" href="@Url.Content("~/Content/css/style.css")" />
+</head>
+<body>
+    <!-- ================= HEADER CHÍNH ================= -->
+    <header class="ws-header">
+        <!-- Top Bar: Tách biệt khung bao ngoài và khung chứa căn lề -->
+        <div class="ws-header-top-wrap">
+            <div class="ws-container ws-header-top">
+                <!-- Logo thật logo.png -->
+                <a href="@Url.Action("Index", "Home")" class="ws-logo-wrap">
+                    <div class="ws-logo-box">
+                        <img src="@Url.Content("~/Content/HinhAnhSP/logo.png")" alt="Logo WATCH STORE" />
+                    </div>
+                    <div class="ws-logo-text">
+                        <span class="ws-logo-title">WATCH STORE</span>
+                        <span class="ws-logo-subtitle">THE ART OF TIME</span>
+                    </div>
+                </a>
+
+                <!-- Search Bar với icon search.png bên trái -->
+                <form action="@Url.Action("TimKiem", "DongHo")" method="get" class="ws-search-bar">
+                    <img src="@Url.Content("~/Content/HinhAnhSP/search.png")"
+                         onerror="this.style.display='none'; this.nextElementSibling.style.display='inline-block';"
+                         class="ws-search-icon-img"
+                         alt="Tìm kiếm" />
+                    <i class="fa-solid fa-magnifying-glass" style="display:none; margin-right:10px; color:#666;"></i>
+                    <input type="text" name="tuKhoa" placeholder="Tìm đồng hồ, thương hiệu..." required autocomplete="off" />
+                </form>
+
+                <!-- User Auth & Giỏ hàng -->
+                <div class="ws-user-section">
+                    @{
+                        KhachHang kh = Session["KhachHang"] as KhachHang;
+                    }
+                    @if (kh == null)
+                    {
+                        <div class="ws-auth-block">
+                            <img src="@Url.Content("~/Content/HinhAnhSP/user-round.png")" class="ws-user-icon-img" alt="Tài khoản" />
+                            @Html.ActionLink("Đăng nhập", "DangNhap", "NguoiDung", null, new { @class = "ws-auth-btn" })
+                            <span class="ws-sep">/</span>
+                            @Html.ActionLink("Đăng ký", "DangKy", "NguoiDung", null, new { @class = "ws-auth-btn" })
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="ws-auth-block ws-logged">
+                            <img src="@Url.Content("~/Content/HinhAnhSP/user-round.png")" class="ws-user-icon-img" alt="Tài khoản" />
+                            <a href="@Url.Action("LichSuDonHang", "DonHang")" class="ws-user-name">Chào, @kh.HoTen</a>
+                            <span class="ws-sep">|</span>
+                            @Html.ActionLink("Thoát", "DangXuat", "NguoiDung", null, new { @class = "ws-logout" })
+                        </div>
+                    }
+
+                    <!-- Nhúng CartSummary -->
+                    @Html.Action("_CartSummary", "Home")
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Bar Nền Trắng -->
+        <nav class="ws-nav-white">
+            <div class="ws-container ws-nav-container">
+                <ul class="ws-nav-menu">
+                    <!-- Danh mục loại (Đồng hồ Nam, Nữ, Đôi) nạp từ _DSMenuLoai.cshtml -->
+                    @Html.Action("_DSMenuLoai", "Home")
+
+                    <!-- Mục Thương hiệu có gắn icon chevron-down.png -->
+                    <li class="ws-nav-item ws-dropdown">
+                        <a href="javascript:void(0)" class="ws-nav-link">
+                            Thương hiệu
+                            <img src="@Url.Content("~/Content/HinhAnhSP/chevron-down.png")" class="ws-arrow-down-img" alt="▾" />
+                        </a>
+                        @Html.Action("_DSMenuThuongHieu", "Home")
+                    </li>
+                </ul>
+
+                <div class="ws-nav-commitment">
+                    CHÍNH HÃNG · TẬN TÂM · ĐẲNG CẤP
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- ================= NỘI DUNG ================= -->
+    <main class="ws-main-body">
+        @RenderBody()
+    </main>
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="ws-footer">
+        <div class="ws-container ws-footer-grid">
+            <div class="ws-footer-col">
+                <div class="ws-footer-brand">
+                    <div class="ws-logo-box ws-logo-box-dark">
+                        <img src="@Url.Content("~/Content/HinhAnhSP/logo.png")" alt="Logo" />
+                    </div>
+                    <div class="ws-logo-text">
+                        <span class="ws-logo-title text-white">WATCH STORE</span>
+                        <span class="ws-logo-subtitle">THE ART OF TIME</span>
+                    </div>
+                </div>
+                <p class="ws-footer-text">
+                    Không chỉ là thời gian. Là phong cách, là câu chuyện của bạn.
+                </p>
+                <div class="ws-social-icons">
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-youtube"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                </div>
+            </div>
+
+            <div class="ws-footer-col">
+                <h4 class="ws-col-title">Hỗ trợ & chính sách</h4>
+                <ul class="ws-col-list">
+                    <li><a href="#">Chính sách bảo hành</a></li>
+                    <li><a href="#">Giao hàng & thanh toán</a></li>
+                    <li><a href="#">Chính sách đổi trả</a></li>
+                    <li><a href="#">Chính sách bảo mật</a></li>
+                    <li><a href="#">Câu hỏi thường gặp</a></li>
+                </ul>
+            </div>
+
+            <div class="ws-footer-col">
+                <h4 class="ws-col-title">Ghé thăm cửa hàng</h4>
+                <ul class="ws-col-list ws-contact-info">
+                    <li>Showroom: 140 Lê Trọng Tấn, P. Tây Thạnh, Q. Tân Phú, TP. Hồ Chí Minh</li>
+                    <li>Hotline tư vấn: <strong>1900 888 999</strong></li>
+                    <li>Email: cskh@watchstore.vn</li>
+                    <li>09:00 – 20:00 · Thứ Hai – Chủ Nhật</li>
+                </ul>
+            </div>
+
+            <div class="ws-footer-col">
+                <h4 class="ws-col-title">Đặc quyền dành riêng cho bạn</h4>
+                <p class="ws-footer-text">Đăng ký để nhận ưu đãi độc quyền và khám phá những bộ sưu tập mới nhất.</p>
+                <form action="#" class="ws-subscribe-form" onsubmit="event.preventDefault(); alert('Cảm ơn bạn đã đăng ký!');">
+                    <input type="email" placeholder="Địa chỉ email của bạn" required />
+                    <button type="submit">Đăng ký</button>
+                </form>
+                <small class="ws-note-text">Thông tin của bạn luôn được bảo mật.</small>
+            </div>
+        </div>
+
+        <div class="ws-footer-bar">
+            <div class="ws-container ws-bar-flex">
+                <p>&copy; 2026 WATCH STORE. Bảo lưu mọi quyền.</p>
+                <div class="ws-payment-types">
+                    <span>VISA</span>
+                    <span>/</span>
+                    <span>MASTERCARD</span>
+                    <span>/</span>
+                    <span>CHUYỂN KHOẢN</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

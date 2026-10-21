@@ -1,0 +1,222 @@
+﻿@using Website_Nhom_05.Models
+@model List<DongHo>
+
+@{
+    ViewBag.Title = "WATCH STORE · Trang chủ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Đảm bảo liên kết trực tiếp style.css từ Content/css/ -->
+<link rel="stylesheet" href="@Url.Content("~/Content/css/style.css")" />
+
+@helper Truncate(string input, int length)
+{
+    if (string.IsNullOrEmpty(input))
+    {
+        <text>Thiết kế đẳng cấp chuẩn quốc tế</text>
+    }
+    else if (input.Length < length)
+    {
+        @input
+    }
+    else
+    {
+        @input.Substring(0, length)<text>...</text>
+    }
+}
+
+<!-- ================= 1. HERO BANNER ================= -->
+<section class="ws-hero-banner">
+    <div class="ws-container ws-hero-inner">
+        <div class="ws-hero-left">
+            <div class="ws-gold-dash-tag">
+                <span class="ws-dash"></span> BỘ SƯU TẬP ĐỒNG HỒ CƠ MỚI
+            </div>
+            <h1 class="ws-hero-heading">
+                Đẳng Cấp Vượt<br />Thời Gian
+            </h1>
+            <p class="ws-hero-subtext">
+                Nghệ thuật chế tác cơ khí. Dấu ấn của riêng bạn. Khám phá những cỗ máy thời gian dành cho người trân trọng từng khoảnh khắc.
+            </p>
+            <div class="ws-hero-btn-wrap">
+                <a href="@Url.Action("Index", "DongHo")" class="ws-btn-hero">
+                    Khám phá ngay <img src="@Url.Content("~/Content/HinhAnhSP/arrow-right.png")" class="ws-btn-icon" alt="&rarr;" />
+                </a>
+            </div>
+        </div>
+
+        <div class="ws-hero-right">
+            <!-- Ảnh đồng hồ cơ nền đen sang trọng -->
+            <img src="@Url.Content("~/Content/HinhAnhSP/EFB-109D-4AV.jpg")"
+                 onerror="this.src='https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1000&q=80'"
+                 class="ws-hero-watch-img"
+                 alt="Đồng hồ cơ cao cấp" />
+            <div class="ws-hero-caption">AUTOMATIC COLLECTION / 2026</div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= 2. 3 DANH MỤC PHONG CÁCH NỔI BẬT ================= -->
+<section class="ws-section ws-styles-section">
+    <div class="ws-container">
+        <div class="ws-block-title text-center">
+            <span class="ws-label-gold">PHONG CÁCH CỦA BẠN</span>
+            <h2 class="ws-heading-title">Một dấu ấn. Muôn phong cách.</h2>
+            <p class="ws-desc-title">Tìm chiếc đồng hồ đồng điệu với cá tính và những khoảnh khắc của bạn.</p>
+        </div>
+
+        <div class="ws-style-grid">
+            <!-- Card 1: Đồng hồ Nam (MaLoai = 1) -->
+            <a href="@Url.Action("DongHoTheoLoai", "DongHo", new { id = 1 })" class="ws-style-card">
+                <img src="@Url.Content("~/Content/HinhAnhSP/cat_nam.jpg")"
+                     onerror="this.src='https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=700&q=80'"
+                     class="ws-style-bg-img"
+                     alt="Đồng hồ Nam" />
+                <div class="ws-style-info">
+                    <div class="ws-style-text">
+                        <h3 class="ws-style-name">Đồng hồ Nam</h3>
+                        <p class="ws-style-desc">Bản lĩnh trong từng chi tiết</p>
+                    </div>
+                    <div class="ws-style-arrow">
+                        <img src="@Url.Content("~/Content/HinhAnhSP/arrow-up-right.png")" class="ws-corner-arrow-img" alt="↗" />
+                    </div>
+                </div>
+            </a>
+
+            <!-- Card 2: Đồng hồ Nữ (MaLoai = 2) -->
+            <a href="@Url.Action("DongHoTheoLoai", "DongHo", new { id = 2 })" class="ws-style-card">
+                <img src="@Url.Content("~/Content/HinhAnhSP/cat_nu.jpg")"
+                     onerror="this.src='https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?auto=format&fit=crop&w=700&q=80'"
+                     class="ws-style-bg-img"
+                     alt="Đồng hồ Nữ" />
+                <div class="ws-style-info">
+                    <div class="ws-style-text">
+                        <h3 class="ws-style-name">Đồng hồ Nữ</h3>
+                        <p class="ws-style-desc">Thanh lịch theo cách riêng</p>
+                    </div>
+                    <div class="ws-style-arrow">
+                        <img src="@Url.Content("~/Content/HinhAnhSP/arrow-up-right.png")" class="ws-corner-arrow-img" alt="↗" />
+                    </div>
+                </div>
+            </a>
+
+            <!-- Card 3: Đồng hồ Đôi (MaLoai = 3) -->
+            <a href="@Url.Action("DongHoTheoLoai", "DongHo", new { id = 3 })" class="ws-style-card">
+                <img src="@Url.Content("~/Content/HinhAnhSP/cat_doi.jpg")"
+                     onerror="this.src='https://images.unsplash.com/photo-1547996160-81dfa63595aa?auto=format&fit=crop&w=700&q=80'"
+                     class="ws-style-bg-img"
+                     alt="Đồng hồ Đôi" />
+                <div class="ws-style-info">
+                    <div class="ws-style-text">
+                        <h3 class="ws-style-name">Đồng hồ Đôi</h3>
+                        <p class="ws-style-desc">Cùng nhau lưu giữ khoảnh khắc</p>
+                    </div>
+                    <div class="ws-style-arrow">
+                        <img src="@Url.Content("~/Content/HinhAnhSP/arrow-up-right.png")" class="ws-corner-arrow-img" alt="↗" />
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ================= 3. KHU VỰC SẢN PHẨM BÁN CHẠY ================= -->
+<section class="ws-section ws-bestseller-section">
+    <div class="ws-container">
+        <div class="ws-section-flex-header">
+            <div>
+                <span class="ws-label-gold">NHỮNG LỰA CHỌN ĐƯỢC YÊU THÍCH</span>
+                <h2 class="ws-heading-title">Đồng hồ bán chạy</h2>
+                <p class="ws-desc-title">Những thiết kế biểu tượng, được lựa chọn bởi người yêu đồng hồ.</p>
+            </div>
+            <a href="@Url.Action("Index", "DongHo")" class="ws-all-link">
+                Xem tất cả sản phẩm
+                <img src="@Url.Content("~/Content/HinhAnhSP/arrow-up-right.png")" class="ws-link-icon" alt="&#8599;" />
+            </a>
+        </div>
+
+        <div class="ws-products-grid">
+            @{ int index = 0; }
+            @foreach (var item in Model)
+            {
+                index++;
+                string badgeLabel = (index % 2 == 1) ? "BÁN CHẠY" : "ĐƯỢC YÊU THÍCH";
+                string brandName = (item.ThuongHieu != null) ? item.ThuongHieu.TenThuongHieu.ToUpper() : "WATCH STORE";
+
+                <div class="ws-item-card">
+                    <div class="ws-item-header">
+                        <span class="ws-item-badge">@badgeLabel</span>
+                        <button type="button" class="ws-item-fav" title="Thêm vào yêu thích">
+                            <i class="fa-regular fa-heart"></i>
+                        </button>
+                    </div>
+
+                    <a href="@Url.Action("Details", "DongHo", new { id = item.MaDongHo })" class="ws-item-thumb">
+                        <img src="@Url.Content("~/Content/HinhAnhSP/" + item.HinhAnh)"
+                             onerror="this.src='https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=500&q=80'"
+                             alt="@item.TenDongHo" />
+                    </a>
+
+                    <div class="ws-item-details">
+                        <span class="ws-item-brand">@brandName</span>
+                        <h3 class="ws-item-name">
+                            <a href="@Url.Action("Details", "DongHo", new { id = item.MaDongHo })">@item.TenDongHo</a>
+                        </h3>
+                        <p class="ws-item-specs">@Truncate(item.MoTa, 38)</p>
+
+                        <div class="ws-item-rating">
+                            <span class="ws-stars">★★★★★</span>
+                            <span class="ws-rate-score">4.9 (128)</span>
+                        </div>
+
+                        <div class="ws-item-price">
+                            @String.Format("{0:0,0}", item.GiaBan) VNĐ
+                        </div>
+
+                        <a href="@Url.Action("ThemMatHang", "GioHang", new { msp = item.MaDongHo, strURL = Request.Url.ToString() })" class="ws-btn-addcart">
+                            Thêm vào giỏ hàng
+                        </a>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- ================= 4. THANH CAM KẾT DỊCH VỤ ================= -->
+<section class="ws-commit-bar">
+    <div class="ws-container ws-commit-flex">
+        <!-- Bảo hành chính hãng: shield-check.png -->
+        <div class="ws-commit-box">
+            <div class="ws-commit-img-wrap">
+                <img src="@Url.Content("~/Content/HinhAnhSP/shield-check.png")" alt="Bảo hành chính hãng" />
+            </div>
+            <div class="ws-commit-info">
+                <h4>Bảo hành chính hãng</h4>
+                <p>An tâm với tiêu chuẩn từ thương hiệu.</p>
+            </div>
+        </div>
+
+        <!-- Giao hàng toàn quốc: truck.png -->
+        <div class="ws-commit-box">
+            <div class="ws-commit-img-wrap">
+                <img src="@Url.Content("~/Content/HinhAnhSP/truck.png")" alt="Giao hàng toàn quốc" />
+            </div>
+            <div class="ws-commit-info">
+                <h4>Giao hàng toàn quốc</h4>
+                <p>Đóng gói cẩn thận, giao tận tay bạn.</p>
+            </div>
+        </div>
+
+        <!-- Đổi trả 7 ngày: rotate-ccw.png -->
+        <div class="ws-commit-box">
+            <div class="ws-commit-img-wrap">
+                <img src="@Url.Content("~/Content/HinhAnhSP/rotate-ccw.png")" alt="Đổi trả 7 ngày" />
+            </div>
+            <div class="ws-commit-info">
+                <h4>Đổi trả 7 ngày</h4>
+                <p>Linh hoạt đổi trả theo chính sách.</p>
+            </div>
+        </div>
+    </div>
+</section>
