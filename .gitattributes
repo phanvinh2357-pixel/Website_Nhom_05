@@ -61,3 +61,7 @@
 #*.PDF   diff=astextplain
 #*.rtf   diff=astextplain
 #*.RTF   diff=astextplain
+
+# Đánh dấu thư mục Scripts là thư viện bên thứ 3 (không tính vào thống kê ngôn ngữ)
+Website_Nhom_05/Scripts/** linguist-vendored
+*.min.js linguist-vendored
