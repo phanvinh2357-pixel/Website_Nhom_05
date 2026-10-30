@@ -1,7 +1,670 @@
-﻿
+
+@using System
+@using System.Collections.Generic
+@using System.Linq
+@using Website_Nhom_05.Models
+@model DongHo
+
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = Model.TenDongHo + " - Chi tiết sản phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    int tongDanhGia = ViewBag.TongDanhGia != null ? (int)ViewBag.TongDanhGia : 0;
+    double diemTrungBinh = ViewBag.DiemTrungBinh != null ? (double)ViewBag.DiemTrungBinh : 0;
+
+    int sao5 = ViewBag.Sao5 != null ? (int)ViewBag.Sao5 : 0;
+    int sao4 = ViewBag.Sao4 != null ? (int)ViewBag.Sao4 : 0;
+    int sao3 = ViewBag.Sao3 != null ? (int)ViewBag.Sao3 : 0;
+    int sao2 = ViewBag.Sao2 != null ? (int)ViewBag.Sao2 : 0;
+    int sao1 = ViewBag.Sao1 != null ? (int)ViewBag.Sao1 : 0;
+
+    List<DanhGia> danhSachDanhGia =
+        ViewBag.DanhSachDanhGia as List<DanhGia> ?? new List<DanhGia>();
+
+    List<DongHo> sanPhamLienQuan =
+        ViewBag.SanPhamLienQuan as List<DongHo> ?? new List<DongHo>();
+
+    string brandName = Model.ThuongHieu != null
+        && !string.IsNullOrEmpty(Model.ThuongHieu.TenThuongHieu)
+        ? Model.ThuongHieu.TenThuongHieu : "";
+
+    string loaiName = Model.LoaiDongHo != null
+        && !string.IsNullOrEmpty(Model.LoaiDongHo.TenLoai)
+        ? Model.LoaiDongHo.TenLoai : "";
+
+
+    string hinhAnh = Model.HinhAnh ?? "";
+
+    string defaultImg = Url.Content(
+        "~/Content/HinhAnhSP/" +
+        (!string.IsNullOrEmpty(hinhAnh)
+            ? hinhAnh
+            : "EFV-100L-1AV.jpg"));
+
+    string fallbackOnline =
+        "https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=900&q=80";
+
+    string tenAnhGoc =
+        System.IO.Path.GetFileNameWithoutExtension(hinhAnh);
+
+    string duoiAnh =
+        System.IO.Path.GetExtension(hinhAnh);
+
+    string angle2 = Url.Content(
+        "~/Content/HinhAnhSP/" + tenAnhGoc + "_2" + duoiAnh);
+
+    string angle3 = Url.Content(
+        "~/Content/HinhAnhSP/" + tenAnhGoc + "_3" + duoiAnh);
+
+    
+
+    int p5 = tongDanhGia > 0 ? (int)Math.Round((double)sao5 / tongDanhGia * 100) : 0;
+    int p4 = tongDanhGia > 0 ? (int)Math.Round((double)sao4 / tongDanhGia * 100) : 0;
+    int p3 = tongDanhGia > 0 ? (int)Math.Round((double)sao3 / tongDanhGia * 100) : 0;
+    int p2 = tongDanhGia > 0 ? (int)Math.Round((double)sao2 / tongDanhGia * 100) : 0;
+    int p1 = tongDanhGia > 0 ? (int)Math.Round((double)sao1 / tongDanhGia * 100) : 0;
+
+    string maSp = "#DH-" +
+        (Model.MaDongHo < 10 ? "0" + Model.MaDongHo : Model.MaDongHo.ToString());
 }
 
-<h2>Details</h2>
+<link rel="stylesheet" href="@Url.Content("~/Content/css/chitiet.css")" />
 
+<!-- 1. BREADCRUMB -->
+<div class="ws-container ct-breadcrumb-wrap">
+    <nav class="ct-breadcrumb" aria-label="breadcrumb">
+        <a href="@Url.Action("Index", "Home")">Trang chủ</a>
+        <span class="ct-sep">/</span>
+        <a href="@Url.Action("Index", "DongHo")">Sản phẩm</a>
+        <span class="ct-sep">/</span>
+        <a href="@Url.Action("DongHoTheoLoai", "DongHo", new { id = Model.MaLoai })">@loaiName</a>
+        <span class="ct-sep">/</span>
+        <span class="ct-current">@Model.TenDongHo</span>
+    </nav>
+</div>
+
+<!-- 2. CHI TIẾT SẢN PHẨM -->
+<section class="ct-product-section">
+    <div class="ws-container ct-product-grid">
+
+        <div class="ct-gallery">
+            <div class="ct-main-image-box">
+                <img id="ct-main-img"
+                     src="@defaultImg"
+                     onerror="this.onerror=null; this.src='@fallbackOnline';"
+                     alt="@Model.TenDongHo" />
+
+                <button type="button" class="ct-expand-btn"
+                        onclick="openLightbox()"
+                        aria-label="Xem toàn màn hình"
+                        title="Phóng to ảnh">
+                    <i class="fa-solid fa-expand"></i>
+                </button>
+            </div>
+
+            <div class="ct-thumbnails-row" id="ct-thumbs">
+                <div class="ct-thumb-card active" onclick="changeImage(this, '@defaultImg')">
+                    <img src="@defaultImg"
+                         onerror="this.onerror=null; this.src='@fallbackOnline';"
+                         alt="Góc nhìn 1" />
+                </div>
+
+                <div class="ct-thumb-card" onclick="changeImage(this, '@angle2')">
+                    <img src="@angle2" alt="Góc nhìn 2" />
+                </div>
+
+                <div class="ct-thumb-card" onclick="changeImage(this, '@angle3')">
+                    <img src="@angle3" alt="Góc nhìn 3" />
+                </div>
+
+               
+            </div>
+
+            <p class="ct-gallery-caption">Chạm ảnh để xem chế độ toàn cảnh</p>
+        </div>
+
+        <div class="ct-info">
+            <div class="ct-meta-top">
+                <span class="ct-brand-badge">@brandName.ToUpper()</span>
+                <span class="ct-sku">Mã sản phẩm: @maSp</span>
+            </div>
+
+            <h1 class="ct-title">@Model.TenDongHo</h1>
+
+            <div class="ct-rating-stock-row">
+                <div class="ct-rating-meta">
+                    <span class="ct-stars">
+                        @for (int i = 1; i <= 5; i++)
+                        {
+                            if (i <= (int)Math.Round(diemTrungBinh))
+                            {
+                                <text>★</text>
+                            }
+                            else
+                            {
+                                <text>☆</text>
+                            }
+                        }
+                    </span>
+                    <span class="ct-score">@diemTrungBinh.ToString("0.0")/5</span>
+                    <span class="ct-review-count">@tongDanhGia lượt đánh giá</span>
+                </div>
+
+                <div class="ct-stock-status">
+                    @if (Model.SoLuongTon > 0)
+                    {
+                        <span class="ct-stock in-stock">
+                            <i class="fa-solid fa-circle"></i> Còn hàng
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="ct-stock out-of-stock">
+                            <i class="fa-solid fa-circle"></i> Hết hàng
+                        </span>
+                    }
+                </div>
+            </div>
+
+            <div class="ct-price-wrap">
+                <div class="ct-price">@String.Format("{0:0,0}", Model.GiaBan) VNĐ</div>
+                <div class="ct-vat">Đã được gồm VAT</div>
+            </div>
+
+            <p class="ct-description">
+                @(string.IsNullOrWhiteSpace(Model.MoTa)
+                    ? "Chưa có mô tả cho sản phẩm này."
+                    : Model.MoTa)
+            </p>
+
+            <div class="ct-qty-row">
+                <span class="ct-qty-label">Số lượng:</span>
+                <div class="ct-stepper">
+                    <button type="button" class="ct-step-btn"
+                            onclick="updateQty(-1)" aria-label="Giảm">
+                        −
+                    </button>
+                    <input type="number" id="buy-qty" class="ct-step-input"
+                           value="1" min="1"
+                           max="@(Model.SoLuongTon > 0 ? Model.SoLuongTon : 1)"
+                           readonly />
+                    <button type="button" class="ct-step-btn"
+                            onclick="updateQty(1)" aria-label="Tăng">
+                        +
+                    </button>
+                </div>
+            </div>
+
+            <div class="ct-actions-row">
+                <a href="@Url.Action("ThemMatHang", "GioHang", new { msp = Model.MaDongHo, strURL = Request.Url.ToString() })"
+                   class="ct-btn-cart" id="btn-add-cart"
+                   onclick="return handleAddToCart(this);">
+                    Thêm vào giỏ hàng
+                </a>
+
+                <a href="@Url.Action("ThemMatHang", "GioHang", new { msp = Model.MaDongHo, strURL = Url.Action("GioHang", "GioHang") })"
+                   class="ct-btn-buy" id="btn-buy-now"
+                   onclick="return handleBuyNow(this);">
+                    Mua ngay
+                </a>
+            </div>
+
+            <div class="ct-specs-card">
+                <h3 class="ct-specs-card-title">Thông số sản phẩm</h3>
+                <ul class="ct-specs-list">
+                    <li>
+                        <span class="ct-spec-k">Thương hiệu</span>
+                        <span class="ct-spec-dots"></span>
+                        <span class="ct-spec-v">@brandName</span>
+                    </li>
+                    <li>
+                        <span class="ct-spec-k">Loại đồng hồ</span>
+                        <span class="ct-spec-dots"></span>
+                        <span class="ct-spec-v">@loaiName</span>
+                    </li>
+                    <li>
+                        <span class="ct-spec-k">Mã sản phẩm</span>
+                        <span class="ct-spec-dots"></span>
+                        <span class="ct-spec-v">@maSp</span>
+                    </li>
+                    <li>
+                        <span class="ct-spec-k">Tình trạng</span>
+                        <span class="ct-spec-dots"></span>
+                        <span class="ct-spec-v">@(Model.SoLuongTon > 0 ? "Còn hàng" : "Hết hàng")</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="ct-guarantees">
+                <div class="ct-guarantee">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>Chính hãng 100%</span>
+                </div>
+                <div class="ct-guarantee">
+                    <i class="fa-solid fa-truck-fast"></i>
+                    <span>Giao hàng toàn quốc</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="ws-container">
+    <hr class="ct-divider-line" />
+</div>
+
+<!-- 3. SẢN PHẨM LIÊN QUAN -->
+<section class="ct-related-section">
+    <div class="ws-container">
+        <div class="ct-section-head">
+            <h2 class="ct-section-title">Sản phẩm liên quan</h2>
+            <span class="ct-section-subtitle">Cùng phong cách, thêm lựa chọn</span>
+        </div>
+
+        <div class="ct-related-grid">
+            @if (sanPhamLienQuan.Count > 0)
+            {
+                foreach (var sp in sanPhamLienQuan)
+                {
+                    string spBrand = sp.ThuongHieu != null
+                        && !string.IsNullOrEmpty(sp.ThuongHieu.TenThuongHieu)
+                        ? sp.ThuongHieu.TenThuongHieu.ToUpper() : "";
+
+                    string spImg = Url.Content(
+                        "~/Content/HinhAnhSP/" +
+                        (string.IsNullOrEmpty(sp.HinhAnh) ? "" : sp.HinhAnh));
+
+                    <div class="ct-related-card">
+                        <div class="ct-related-thumb-box">
+                            <button type="button" class="ct-fav-btn"
+                                    onclick="toggleFav(this)" title="Thêm vào yêu thích">
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
+
+                            <a href="@Url.Action("Details", "DongHo", new { id = sp.MaDongHo })"
+                               class="ct-related-thumb-link">
+                                <img src="@spImg"
+                                     onerror="this.onerror=null; this.src='@fallbackOnline';"
+                                     alt="@sp.TenDongHo" />
+                            </a>
+                        </div>
+
+                        <div class="ct-related-info">
+                            <span class="ct-related-brand">@spBrand</span>
+                            <h3 class="ct-related-name">
+                                <a href="@Url.Action("Details", "DongHo", new { id = sp.MaDongHo })">
+                                    @sp.TenDongHo
+                                </a>
+                            </h3>
+                            <div class="ct-related-specs">@loaiName</div>
+                            <div class="ct-related-price">
+                                @String.Format("{0:0,0}", sp.GiaBan) VNĐ
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+            else
+            {
+                <p>Chưa có sản phẩm liên quan.</p>
+            }
+        </div>
+    </div>
+</section>
+
+<div class="ws-container">
+    <hr class="ct-divider-line" />
+</div>
+
+<!-- 4. ĐÁNH GIÁ VÀ NHẬN XÉT -->
+<section class="ct-review-section">
+    <div class="ws-container">
+        <div class="ct-section-head">
+            <h2 class="ct-section-title">Đánh giá & Nhận xét</h2>
+            <button type="button" class="ct-btn-write-review"
+                    onclick="openReviewModal()">
+                Viết đánh giá
+            </button>
+        </div>
+
+        <div class="ct-review-grid">
+            <div class="ct-rating-box">
+                <div class="ct-score-big">
+                    @diemTrungBinh.ToString("0.0")
+                    <span class="ct-score-sub">/5</span>
+                </div>
+
+                <div class="ct-score-stars">
+                    @for (int i = 1; i <= 5; i++)
+                    {
+                        if (i <= (int)Math.Round(diemTrungBinh))
+                        {
+                            <text>★</text>
+                        }
+                        else
+                        {
+                            <text>☆</text>
+                        }
+                    }
+                </div>
+
+                <div class="ct-score-total">@tongDanhGia lượt đánh giá</div>
+
+                <div class="ct-bars-list">
+                    <div class="ct-bar-item">
+                        <span class="ct-bar-num">5</span>
+                        <span class="ct-bar-star">★</span>
+                        <div class="ct-bar-line">
+                            <div class="ct-bar-fill" style="width: @(p5)%"></div>
+                        </div>
+                        <span class="ct-bar-val">@sao5</span>
+                    </div>
+
+                    <div class="ct-bar-item">
+                        <span class="ct-bar-num">4</span>
+                        <span class="ct-bar-star">★</span>
+                        <div class="ct-bar-line">
+                            <div class="ct-bar-fill" style="width: @(p4)%"></div>
+                        </div>
+                        <span class="ct-bar-val">@sao4</span>
+                    </div>
+
+                    <div class="ct-bar-item">
+                        <span class="ct-bar-num">3</span>
+                        <span class="ct-bar-star">★</span>
+                        <div class="ct-bar-line">
+                            <div class="ct-bar-fill" style="width: @(p3)%"></div>
+                        </div>
+                        <span class="ct-bar-val">@sao3</span>
+                    </div>
+
+                    <div class="ct-bar-item">
+                        <span class="ct-bar-num">2</span>
+                        <span class="ct-bar-star">★</span>
+                        <div class="ct-bar-line">
+                            <div class="ct-bar-fill" style="width: @(p2)%"></div>
+                        </div>
+                        <span class="ct-bar-val">@sao2</span>
+                    </div>
+
+                    <div class="ct-bar-item">
+                        <span class="ct-bar-num">1</span>
+                        <span class="ct-bar-star">★</span>
+                        <div class="ct-bar-line">
+                            <div class="ct-bar-fill" style="width: @(p1)%"></div>
+                        </div>
+                        <span class="ct-bar-val">@sao1</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ct-reviews-wrap">
+                <div class="ct-reviews-topbar">
+                    <h3 class="ct-reviews-heading">Nhận xét từ khách hàng</h3>
+                    <div class="ct-sort-filter" onclick="toggleSortMenu(this)">
+                        <span>Mới nhất</span>
+                        <i class="fa-solid fa-chevron-down"></i>
+                    </div>
+                </div>
+
+                <div class="ct-reviews-list" id="ct-reviews-container">
+                    @if (danhSachDanhGia.Count > 0)
+                    {
+                        foreach (var dg in danhSachDanhGia)
+                        {
+                            string tenKH = dg.KhachHang != null
+                                && !string.IsNullOrWhiteSpace(dg.KhachHang.HoTen)
+                                ? dg.KhachHang.HoTen : "Khách hàng";
+
+                            string initials = "KH";
+                            string[] parts = tenKH.Trim().Split(
+                                new char[] { ' ' },
+                                StringSplitOptions.RemoveEmptyEntries);
+
+                            if (parts.Length >= 2)
+                            {
+                                initials = parts[parts.Length - 2].Substring(0, 1)
+                                         + parts[parts.Length - 1].Substring(0, 1);
+                            }
+                            else if (parts.Length == 1 && parts[0].Length > 0)
+                            {
+                                initials = parts[0].Substring(0, 1);
+                            }
+
+                            int diem = dg.DiemDanhGia;
+                            if (diem < 0) { diem = 0; }
+                            if (diem > 5) { diem = 5; }
+
+                            <div class="ct-review-entry">
+                                <div class="ct-review-user-row">
+                                    <div class="ct-user-left">
+                                        <div class="ct-avatar-circle">
+                                            @initials.ToUpper()
+                                        </div>
+                                        <div class="ct-user-meta">
+                                            <span class="ct-user-name">@tenKH</span>
+                                        </div>
+                                    </div>
+
+                                    <span class="ct-review-date">
+                                        @dg.NgayDanhGia.ToString("dd/MM/yyyy")
+                                    </span>
+                                </div>
+
+                                <div class="ct-review-rating-line">
+                                    <span class="ct-stars">
+                                        @for (int s = 1; s <= 5; s++)
+                                        {
+                                            if (s <= diem)
+                                            {
+                                                <text>★</text>
+                                            }
+                                            else
+                                            {
+                                                <text>☆</text>
+                                            }
+                                        }
+                                    </span>
+                                </div>
+
+                                <p class="ct-review-text">
+                                    @(string.IsNullOrWhiteSpace(dg.NoiDung)
+                                        ? "Khách hàng không để lại nội dung."
+                                        : dg.NoiDung)
+                                </p>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="ct-review-entry">
+                            <p class="ct-review-text">
+                                Chưa có đánh giá nào cho sản phẩm này.
+                            </p>
+                        </div>
+                    }
+                </div>
+
+                <div class="ct-reviews-footer">
+                    <span class="ct-see-all-link">
+                        Tổng cộng @tongDanhGia lượt đánh giá
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 5. LIGHTBOX -->
+<div id="ct-lightbox" class="ct-lightbox-overlay" onclick="closeLightbox(event)">
+    <div class="ct-lightbox-content" onclick="event.stopPropagation()">
+        <button type="button" class="ct-lightbox-close"
+                onclick="closeLightbox()">
+            &times;
+        </button>
+        <img id="ct-lightbox-img" src="@defaultImg" alt="Ảnh phóng to" />
+    </div>
+</div>
+
+<!-- 6. MODAL VIẾT ĐÁNH GIÁ -->
+<div id="ct-review-modal" class="ct-modal-overlay" onclick="closeReviewModal(event)">
+    <div class="ct-modal-box" onclick="event.stopPropagation()">
+        <div class="ct-modal-header">
+            <h3>Viết đánh giá sản phẩm</h3>
+            <button type="button" class="ct-modal-close"
+                    onclick="closeReviewModal()">
+                &times;
+            </button>
+        </div>
+
+        <form id="ct-review-form" onsubmit="handleReviewSubmit(event)">
+            <div class="ct-form-group">
+                <label>Đánh giá của bạn:</label>
+                <div class="ct-star-selector" id="star-selector">
+                    <span class="star-pick" data-val="1">★</span>
+                    <span class="star-pick" data-val="2">★</span>
+                    <span class="star-pick" data-val="3">★</span>
+                    <span class="star-pick" data-val="4">★</span>
+                    <span class="star-pick active" data-val="5">★</span>
+                </div>
+            </div>
+
+            <div class="ct-form-group">
+                <label for="rev-comment">Nội dung nhận xét *</label>
+                <textarea id="rev-comment" rows="4" required
+                          placeholder="Chia sẻ cảm nhận của bạn về sản phẩm..."
+                          class="ct-form-input"></textarea>
+            </div>
+
+            <div class="ct-modal-footer">
+                <button type="button" class="ct-btn-cancel"
+                        onclick="closeReviewModal()">
+                    Hủy
+                </button>
+                <button type="submit" class="ct-btn-submit-review">Gửi đánh giá</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div id="ct-toast" class="ct-toast"></div>
+
+<!-- 7. JAVASCRIPT -->
+<script>
+    function changeImage(thumbEl, imgSrc) {
+        document.querySelectorAll('.ct-thumb-card').forEach(function (t) {
+            t.classList.remove('active');
+        });
+
+        thumbEl.classList.add('active');
+
+        var mainImg = document.getElementById('ct-main-img');
+        mainImg.style.opacity = '0.3';
+
+        setTimeout(function () {
+            mainImg.src = imgSrc;
+            mainImg.style.opacity = '1';
+        }, 150);
+
+        var lbImg = document.getElementById('ct-lightbox-img');
+        if (lbImg) lbImg.src = imgSrc;
+    }
+
+    function updateQty(delta) {
+        var input = document.getElementById('buy-qty');
+        var val = parseInt(input.value) || 1;
+        var max = parseInt(input.max) || 1;
+
+        var newVal = val + delta;
+        if (newVal < 1) newVal = 1;
+        if (newVal > max) newVal = max;
+
+        input.value = newVal;
+    }
+
+    function handleAddToCart(btn) {
+        showToast("Đang chuyển đến giỏ hàng...");
+        return true;
+    }
+
+    function handleBuyNow(btn) {
+        return true;
+    }
+
+    function toggleFav(btn) {
+        var icon = btn.querySelector('i');
+
+        if (icon.classList.contains('fa-regular')) {
+            icon.classList.remove('fa-regular');
+            icon.classList.add('fa-solid');
+            icon.style.color = '#c62828';
+            showToast("Đã thêm vào danh sách yêu thích!");
+        } else {
+            icon.classList.remove('fa-solid');
+            icon.classList.add('fa-regular');
+            icon.style.color = '';
+            showToast("Đã bỏ khỏi danh sách yêu thích!");
+        }
+    }
+
+    function openLightbox() {
+        var mainImg = document.getElementById('ct-main-img');
+        document.getElementById('ct-lightbox-img').src = mainImg.src;
+        document.getElementById('ct-lightbox').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeLightbox(e) {
+        document.getElementById('ct-lightbox').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    function openReviewModal() {
+        document.getElementById('ct-review-modal').classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeReviewModal(e) {
+        document.getElementById('ct-review-modal').classList.remove('active');
+        document.body.style.overflow = '';
+    }
+
+    var currentRating = 5;
+
+    document.querySelectorAll('#star-selector .star-pick').forEach(function (star) {
+        star.addEventListener('click', function () {
+            currentRating = parseInt(this.getAttribute('data-val'));
+
+            document.querySelectorAll('#star-selector .star-pick').forEach(function (s) {
+                var value = parseInt(s.getAttribute('data-val'));
+
+                if (value <= currentRating) {
+                    s.classList.add('active');
+                } else {
+                    s.classList.remove('active');
+                }
+            });
+        });
+    });
+
+    function handleReviewSubmit(e) {
+        e.preventDefault();
+
+        // Form chưa kết nối action POST để lưu vào database.
+        showToast("Chức năng gửi đánh giá cần được kết nối với database.");
+    }
+
+    function showToast(msg) {
+        var toast = document.getElementById('ct-toast');
+        toast.textContent = msg;
+        toast.classList.add('show');
+
+        setTimeout(function () {
+            toast.classList.remove('show');
+        }, 3200);
+    }
+
+    function toggleSortMenu(el) {
+        showToast("Danh sách hiện được sắp xếp theo ngày đánh giá mới nhất.");
+    }
+</script>

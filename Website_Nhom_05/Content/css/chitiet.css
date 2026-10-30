@@ -1,0 +1,1196 @@
+/* ==========================================================================
+   WATCH STORE – GIAO DIỆN CHI TIẾT SẢN PHẨM LUXURY (chitiet.css)
+   Thiết kế chuẩn mực theo mẫu tham khảo
+   ========================================================================== */
+
+/* ─── CÁC BIẾN MÀU SẮC CHỦ ĐẠO ─── */
+:root {
+    --ct-gold-brown: #8c6239;
+    --ct-gold-brown-dark: #744e27;
+    --ct-gold-brown-light: #f7f1ea;
+    --ct-text-dark: #1a1a1a;
+    --ct-text-body: #4a4a4a;
+    --ct-text-muted: #787878;
+    --ct-border: #e8e4de;
+    --ct-bg-card: #f7f7f6;
+    --ct-bg-soft: #faf8f5;
+    --ct-star: #e29d38;
+    --ct-in-stock: #2e7d32;
+    --ct-font-serif: 'Playfair Display', Georgia, serif;
+    --ct-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* ─── 1. BREADCRUMB ─── */
+.ct-breadcrumb-wrap {
+    padding: 16px 0 14px;
+}
+
+.ct-breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 12.5px;
+    color: var(--ct-text-muted);
+}
+
+.ct-breadcrumb a {
+    color: var(--ct-text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.ct-breadcrumb a:hover {
+    color: var(--ct-gold-brown);
+}
+
+.ct-breadcrumb .ct-sep {
+    margin: 0 10px;
+    color: #c8c5bf;
+    font-size: 11px;
+}
+
+.ct-breadcrumb .ct-current {
+    color: var(--ct-text-dark);
+    font-weight: 500;
+}
+
+/* ─── 2. KHU VỰC CHI TIẾT SẢN PHẨM CHÍNH ─── */
+.ct-product-section {
+    padding: 10px 0 40px;
+}
+
+.ct-product-grid {
+    display: grid;
+    grid-template-columns: 1.05fr 0.95fr;
+    gap: 52px;
+    align-items: flex-start;
+}
+
+/* ─── 2.1 BÊN TRÁI: GALLERY ẢNH ─── */
+.ct-gallery {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Khung ảnh chính lớn */
+.ct-main-image-box {
+    background: var(--ct-bg-card);
+    border: 1px solid #ebe8e2;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 540px;
+    max-height: 600px;
+    position: relative;
+    overflow: hidden;
+    padding: 30px 24px;
+}
+
+    .ct-main-image-box img {
+        width: 100%;
+        height: 460px;
+        object-fit: contain;
+        display: block;
+        transition: transform 0.4s ease;
+    }
+
+        /* Ảnh có đồng hồ nhỏ thì thêm class ct-img-small để phóng to */
+        .ct-main-image-box img.ct-img-small {
+            transform: scale(1.2);
+        }
+
+        /* Hover */
+        .ct-main-image-box img:hover {
+            cursor: zoom-in;
+        }
+
+
+/* Nút phóng to / xem toàn màn hình */
+.ct-expand-btn {
+    position: absolute;
+    bottom: 18px;
+    right: 18px;
+    width: 38px;
+    height: 38px;
+    background: #ffffff;
+    border: 1px solid #e0ddd7;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    z-index: 2;
+}
+
+.ct-expand-btn:hover {
+    color: var(--ct-gold-brown);
+    border-color: var(--ct-gold-brown);
+    background: var(--ct-bg-soft);
+    transform: scale(1.05);
+}
+
+/* Hàng 4 Thumbnail bên dưới ảnh chính */
+.ct-thumbnails-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-top: 14px;
+}
+
+.ct-thumb-card {
+    background: var(--ct-bg-card);
+    border: 1.5px solid #e5e2dc;
+    border-radius: 4px;
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    padding: 8px;
+    transition: all 0.25s ease;
+}
+
+.ct-thumb-card img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.2s ease;
+}
+
+.ct-thumb-card:hover {
+    border-color: var(--ct-gold-brown);
+    background: #fff;
+}
+
+.ct-thumb-card.active {
+    border: 2px solid var(--ct-gold-brown);
+    box-shadow: 0 2px 8px rgba(140, 98, 57, 0.16);
+    background: #fff;
+}
+
+.ct-gallery-caption {
+    text-align: center;
+    font-size: 12px;
+    color: var(--ct-text-muted);
+    margin-top: 12px;
+}
+
+/* ─── 2.2 BÊN PHẢI: THÔNG TIN SẢN PHẨM ─── */
+.ct-info {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Thương hiệu & Mã SP */
+.ct-meta-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.ct-brand-badge {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    color: var(--ct-gold-brown);
+    background: var(--ct-gold-brown-light);
+    padding: 4px 10px;
+    border-radius: 3px;
+    text-transform: uppercase;
+}
+
+.ct-sku {
+    font-size: 12.5px;
+    color: var(--ct-text-muted);
+}
+
+/* Tên đồng hồ */
+.ct-title {
+    font-family: var(--ct-font-serif);
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--ct-text-dark);
+    margin: 8px 0 12px;
+    line-height: 1.3;
+}
+
+/* Đánh giá sao & Tình trạng còn hàng */
+.ct-rating-stock-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--ct-border);
+}
+
+.ct-rating-meta {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+}
+
+.ct-stars {
+    color: var(--ct-star);
+    letter-spacing: 1px;
+    font-size: 14px;
+}
+
+.ct-score {
+    font-weight: 700;
+    color: var(--ct-text-dark);
+}
+
+.ct-review-count {
+    color: var(--ct-text-muted);
+    font-size: 12.5px;
+}
+
+.ct-stock {
+    font-size: 12.5px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.ct-stock i {
+    font-size: 6px;
+}
+
+.ct-stock.in-stock {
+    color: var(--ct-in-stock);
+}
+
+.ct-stock.out-of-stock {
+    color: #c62828;
+}
+
+/* Giá bán & VAT */
+.ct-price-wrap {
+    margin-bottom: 16px;
+}
+
+.ct-price {
+    font-size: 30px;
+    font-weight: 700;
+    color: var(--ct-gold-brown);
+    font-family: var(--ct-font-sans);
+    line-height: 1.15;
+}
+
+.ct-vat {
+    font-size: 12px;
+    color: var(--ct-text-muted);
+    font-style: italic;
+    margin-top: 4px;
+}
+
+/* Đoạn mô tả ngắn */
+.ct-description {
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--ct-text-body);
+    margin-bottom: 22px;
+}
+
+/* Bộ chọn số lượng */
+.ct-qty-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 22px;
+}
+
+.ct-qty-label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ct-text-dark);
+}
+
+.ct-stepper {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #dcd7cf;
+    border-radius: 4px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.ct-step-btn {
+    width: 34px;
+    height: 34px;
+    border: none;
+    background: #faf8f5;
+    font-size: 15px;
+    cursor: pointer;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.ct-step-btn:hover {
+    background: #ede8e0;
+}
+
+.ct-step-input {
+    width: 44px;
+    height: 34px;
+    border: none;
+    border-left: 1px solid #ece7e0;
+    border-right: 1px solid #ece7e0;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ct-text-dark);
+    outline: none;
+    background: #fff;
+    -moz-appearance: textfield;
+}
+
+.ct-step-input::-webkit-outer-spin-button,
+.ct-step-input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* 2 Nút hành động Mua hàng */
+.ct-actions-row {
+    display: flex;
+    gap: 14px;
+    margin-bottom: 24px;
+}
+
+.ct-btn-cart {
+    flex: 1;
+    padding: 13px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1.5px solid var(--ct-gold-brown);
+    color: var(--ct-gold-brown);
+    background: #ffffff;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.ct-btn-cart:hover {
+    background: var(--ct-gold-brown-light);
+    border-color: var(--ct-gold-brown-dark);
+    color: var(--ct-gold-brown-dark);
+}
+
+.ct-btn-buy {
+    flex: 1;
+    padding: 13px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    border: 1.5px solid var(--ct-gold-brown);
+    background: var(--ct-gold-brown);
+    color: #ffffff;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.ct-btn-buy:hover {
+    background: var(--ct-gold-brown-dark);
+    border-color: var(--ct-gold-brown-dark);
+    color: #ffffff;
+    box-shadow: 0 4px 14px rgba(140, 98, 57, 0.25);
+}
+
+/* Khung Thông số sản phẩm (nằm bên dưới các nút trên cột phải) */
+.ct-specs-card {
+    border-top: 1px solid var(--ct-border);
+    border-bottom: 1px solid var(--ct-border);
+    padding: 18px 0;
+    margin-bottom: 20px;
+}
+
+.ct-specs-card-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ct-text-dark);
+    margin-bottom: 12px;
+}
+
+.ct-specs-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ct-specs-list li {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    padding: 7px 0;
+    font-size: 13.5px;
+}
+
+.ct-spec-k {
+    color: #666;
+    font-weight: 400;
+    flex-shrink: 0;
+}
+
+.ct-spec-dots {
+    flex: 1;
+    border-bottom: 1px dotted #ccc;
+    margin: 0 10px;
+    height: 1px;
+}
+
+.ct-spec-v {
+    color: var(--ct-text-dark);
+    font-weight: 600;
+    text-align: right;
+    flex-shrink: 0;
+}
+
+/* Cam kết dịch vụ mini */
+.ct-guarantees {
+    display: flex;
+    gap: 32px;
+    align-items: center;
+    padding: 4px 0 0;
+}
+
+.ct-guarantee {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--ct-text-body);
+}
+
+.ct-guarantee i {
+    color: var(--ct-gold-brown);
+    font-size: 15px;
+}
+
+/* ─── 3. ĐƯỜNG PHÂN CÁCH CÁC PHẦN ─── */
+.ct-divider-line {
+    border: none;
+    border-top: 1px solid var(--ct-border);
+    margin: 48px 0;
+}
+
+/* ─── 4. SẢN PHẨM LIÊN QUAN ─── */
+.ct-related-section {
+    padding: 0 0 20px;
+}
+
+.ct-section-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 28px;
+}
+
+.ct-section-title {
+    font-family: var(--ct-font-serif);
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--ct-text-dark);
+    margin: 0;
+}
+
+.ct-section-subtitle {
+    font-size: 13px;
+    color: var(--ct-text-muted);
+    font-style: italic;
+}
+
+/* Lưới 4 sản phẩm */
+.ct-related-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+}
+
+.ct-related-card {
+    display: flex;
+    flex-direction: column;
+}
+
+.ct-related-thumb-box {
+    background: var(--ct-bg-card);
+    border: 1px solid #ede9e3;
+    border-radius: 6px;
+    height: 280px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px;
+    overflow: hidden;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.ct-related-thumb-box:hover {
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+    transform: translateY(-3px);
+}
+
+.ct-related-thumb-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.ct-related-thumb-box img {
+    max-width: 85%;
+    max-height: 220px;
+    object-fit: contain;
+    transition: transform 0.35s ease;
+}
+
+.ct-related-thumb-box:hover img {
+    transform: scale(1.06);
+}
+
+.ct-fav-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1px solid #e2ded8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #777;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 3;
+}
+
+.ct-fav-btn:hover {
+    color: #c62828;
+    border-color: #c62828;
+    background: #fff;
+    transform: scale(1.08);
+}
+
+.ct-related-info {
+    padding: 12px 2px 0;
+}
+
+.ct-related-brand {
+    font-size: 11px;
+    font-weight: 700;
+    color: var(--ct-gold-brown);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 4px;
+}
+
+.ct-related-name {
+    font-family: var(--ct-font-serif);
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--ct-text-dark);
+    margin: 0 0 6px;
+    line-height: 1.35;
+}
+
+.ct-related-name a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.ct-related-name a:hover {
+    color: var(--ct-gold-brown);
+}
+
+.ct-related-specs {
+    font-size: 12px;
+    color: var(--ct-text-muted);
+    margin-bottom: 8px;
+}
+
+.ct-related-price {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ct-text-dark);
+}
+
+/* ─── 5. ĐÁNH GIÁ & NHẬN XÉT ─── */
+.ct-review-section {
+    padding: 0 0 70px;
+}
+
+.ct-btn-write-review {
+    border: 1px solid var(--ct-gold-brown);
+    background: #ffffff;
+    color: var(--ct-gold-brown);
+    font-size: 13px;
+    font-weight: 500;
+    padding: 7px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.ct-btn-write-review:hover {
+    background: var(--ct-gold-brown);
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(140, 98, 57, 0.2);
+}
+
+.ct-review-grid {
+    display: grid;
+    grid-template-columns: 290px 1fr;
+    gap: 48px;
+    align-items: flex-start;
+}
+
+/* Cột trái: Thẻ tóm tắt điểm số */
+.ct-rating-box {
+    background: var(--ct-bg-soft);
+    border: 1px solid var(--ct-border);
+    border-radius: 6px;
+    padding: 32px 24px;
+    text-align: center;
+}
+
+.ct-score-big {
+    font-size: 48px;
+    font-weight: 700;
+    color: var(--ct-text-dark);
+    font-family: var(--ct-font-serif);
+    line-height: 1;
+    margin-bottom: 6px;
+}
+
+.ct-score-sub {
+    font-size: 18px;
+    color: var(--ct-text-muted);
+    font-weight: 400;
+}
+
+.ct-score-stars {
+    color: var(--ct-star);
+    font-size: 20px;
+    letter-spacing: 2px;
+    margin-bottom: 6px;
+}
+
+.ct-score-total {
+    font-size: 12px;
+    color: var(--ct-text-muted);
+    margin-bottom: 24px;
+}
+
+/* Các thanh phân bổ sao */
+.ct-bars-list {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.ct-bar-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+}
+
+.ct-bar-num {
+    width: 12px;
+    text-align: right;
+    color: #555;
+    font-weight: 600;
+}
+
+.ct-bar-star {
+    color: var(--ct-star);
+    font-size: 11px;
+}
+
+.ct-bar-line {
+    flex: 1;
+    height: 5px;
+    background: #e8e4de;
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.ct-bar-fill {
+    height: 100%;
+    background: var(--ct-gold-brown);
+    border-radius: 3px;
+    transition: width 0.6s ease;
+}
+
+.ct-bar-val {
+    width: 18px;
+    text-align: right;
+    color: var(--ct-text-muted);
+}
+
+/* Cột phải: Danh sách nhận xét */
+.ct-reviews-wrap {
+    display: flex;
+    flex-direction: column;
+}
+
+.ct-reviews-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--ct-border);
+    margin-bottom: 8px;
+}
+
+.ct-reviews-heading {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: var(--ct-text-dark);
+    margin: 0;
+}
+
+.ct-sort-filter {
+    font-size: 12.5px;
+    color: #666;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 3px;
+    transition: background 0.2s;
+}
+
+.ct-sort-filter:hover {
+    background: var(--ct-bg-soft);
+    color: var(--ct-gold-brown);
+}
+
+.ct-sort-filter i {
+    font-size: 10px;
+}
+
+/* Mỗi dòng nhận xét */
+.ct-review-entry {
+    padding: 18px 0;
+    border-bottom: 1px solid #f0ede8;
+}
+
+.ct-review-entry:last-child {
+    border-bottom: 1px solid #f0ede8;
+}
+
+.ct-review-user-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.ct-user-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ct-avatar-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #f0e6dc;
+    color: #6e4823;
+    font-weight: 700;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.ct-user-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.ct-user-name {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--ct-text-dark);
+}
+
+.ct-verified-badge {
+    font-size: 11.5px;
+    color: var(--ct-text-muted);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.ct-verified-badge i {
+    color: var(--ct-in-stock);
+    font-size: 11px;
+}
+
+.ct-review-date {
+    font-size: 12px;
+    color: var(--ct-text-muted);
+}
+
+.ct-review-rating-line {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.ct-review-title-text {
+    font-size: 13.5px;
+    font-weight: 700;
+    color: var(--ct-text-dark);
+}
+
+.ct-review-text {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #444;
+    margin: 0;
+}
+
+.ct-reviews-footer {
+    text-align: center;
+    padding-top: 24px;
+}
+
+.ct-see-all-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: #555;
+    text-decoration: underline;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.ct-see-all-link:hover {
+    color: var(--ct-gold-brown);
+}
+
+/* ─── 6. LIGHTBOX MODAL ─── */
+.ct-lightbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.ct-lightbox-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.ct-lightbox-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.ct-lightbox-content img {
+    max-width: 85vw;
+    max-height: 85vh;
+    object-fit: contain;
+    border-radius: 4px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    background: #fff;
+    padding: 16px;
+}
+
+.ct-lightbox-close {
+    position: absolute;
+    top: -44px;
+    right: 0;
+    background: transparent;
+    border: none;
+    color: #fff;
+    font-size: 36px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+/* ─── 7. MODAL VIẾT ĐÁNH GIÁ ─── */
+.ct-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.ct-modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.ct-modal-box {
+    background: #fff;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 520px;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    animation: modalSlideUp 0.3s ease forwards;
+}
+
+@keyframes modalSlideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+.ct-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--ct-border);
+}
+
+.ct-modal-header h3 {
+    font-family: var(--ct-font-serif);
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ct-text-dark);
+    margin: 0;
+}
+
+.ct-modal-close {
+    background: transparent;
+    border: none;
+    font-size: 24px;
+    color: #888;
+    cursor: pointer;
+}
+
+.ct-modal-box form {
+    padding: 20px 24px;
+}
+
+.ct-form-group {
+    margin-bottom: 16px;
+}
+
+.ct-form-group label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 6px;
+}
+
+.ct-star-selector {
+    display: flex;
+    gap: 6px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.ct-star-selector .star-pick {
+    color: #d8d4cd;
+    transition: color 0.15s;
+}
+
+.ct-star-selector .star-pick.active,
+.ct-star-selector .star-pick:hover {
+    color: var(--ct-star);
+}
+
+.ct-form-input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d5d1c9;
+    border-radius: 4px;
+    font-size: 13.5px;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.2s;
+}
+
+.ct-form-input:focus {
+    border-color: var(--ct-gold-brown);
+}
+
+.ct-modal-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+.ct-btn-cancel {
+    background: transparent;
+    border: 1px solid #ccc;
+    padding: 9px 18px;
+    border-radius: 4px;
+    font-size: 13px;
+    cursor: pointer;
+    color: #666;
+}
+
+.ct-btn-submit-review {
+    background: var(--ct-gold-brown);
+    border: 1px solid var(--ct-gold-brown);
+    color: #fff;
+    padding: 9px 22px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.ct-btn-submit-review:hover {
+    background: var(--ct-gold-brown-dark);
+}
+
+/* ─── 8. TOAST THÔNG BÁO ─── */
+.ct-toast {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #1e1e1e;
+    color: #ffffff;
+    padding: 12px 22px;
+    border-radius: 4px;
+    font-size: 13.5px;
+    font-weight: 500;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    z-index: 10000;
+    opacity: 0;
+    transform: translateY(15px);
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.ct-toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ─── 9. RESPONSIVE DESIGN ─── */
+@media (max-width: 1200px) {
+    .ct-product-grid {
+        gap: 36px;
+    }
+
+    .ct-related-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .ct-review-grid {
+        grid-template-columns: 260px 1fr;
+        gap: 32px;
+    }
+}
+
+@media (max-width: 900px) {
+    .ct-product-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ct-review-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ct-main-image-box {
+        min-height: 420px;
+    }
+}
+
+@media (max-width: 600px) {
+    .ct-title {
+        font-size: 24px;
+    }
+
+    .ct-price {
+        font-size: 26px;
+    }
+
+    .ct-actions-row {
+        flex-direction: column;
+    }
+
+    .ct-related-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ct-thumbnails-row {
+        gap: 8px;
+    }
+
+    .ct-thumb-card {
+        height: 74px;
+    }
+
+    .ct-guarantees {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .ct-section-head {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+}
