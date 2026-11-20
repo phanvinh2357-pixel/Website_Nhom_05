@@ -1,0 +1,617 @@
+﻿/* ==========================================================================
+   WATCH STORE - PHÂN HỆ GIỎ HÀNG & THANH TOÁN (giohang.css)
+   ========================================================================== */
+
+.ws-cart-page {
+    background-color: #FAFAFA;
+    padding: 30px 0 80px;
+    min-height: 80vh;
+}
+
+/* Breadcrumb */
+.ws-cart-breadcrumb {
+    font-size: 13px;
+    color: #888888;
+    margin-bottom: 24px;
+}
+
+/* Header & Progress Stepper */
+.ws-cart-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.ws-cart-title {
+    font-family: var(--ws-font-serif, 'Playfair Display', serif);
+    font-size: 38px;
+    font-weight: 500;
+    color: #111111;
+    margin: 0 0 6px;
+}
+
+.ws-cart-subtitle {
+    font-size: 13.5px;
+    color: #777777;
+    margin: 0;
+}
+
+/* Thanh chỉ báo bước (Stepper) */
+.ws-stepper {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.ws-step {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: #888888;
+}
+
+    .ws-step.active {
+        color: #111111;
+        font-weight: 600;
+    }
+
+.ws-step-num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    border: 1px solid #CCCCCC;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+}
+
+.ws-step.active .ws-step-num {
+    background-color: #9E7D3B;
+    border-color: #9E7D3B;
+    color: #FFFFFF;
+}
+
+.ws-step-arrow {
+    color: #CCCCCC;
+    font-size: 14px;
+}
+
+/* Bố cục 2 Cột Giỏ Hàng */
+.ws-cart-grid {
+    display: grid;
+    grid-template-columns: 1fr 390px;
+    gap: 36px;
+    align-items: start;
+}
+
+/* Danh sách sản phẩm bên trái */
+.ws-cart-table-wrap {
+    background: #FFFFFF;
+    border: 1px solid #EBEBEB;
+    border-radius: 4px;
+    padding: 24px;
+}
+
+.ws-cart-table-header {
+    display: grid;
+    grid-template-columns: 3.5fr 1.5fr 1.2fr 1.5fr 0.5fr;
+    font-size: 12px;
+    font-weight: 600;
+    color: #777777;
+    border-bottom: 1px solid #EEEEEE;
+    padding-bottom: 14px;
+    margin-bottom: 16px;
+}
+
+.ws-cart-row {
+    display: grid;
+    grid-template-columns: 3.5fr 1.5fr 1.2fr 1.5fr 0.5fr;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #F4F4F4;
+}
+
+.ws-cart-item-info {
+    display: flex;
+    gap: 18px;
+    align-items: center;
+}
+
+.ws-cart-thumb {
+    width: 76px;
+    height: 96px;
+    background: #FDFBF7;
+    border: 1px solid #EAEAEA;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px;
+}
+
+    .ws-cart-thumb img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+.ws-cart-brand-tag {
+    font-size: 10px;
+    letter-spacing: 1px;
+    font-weight: 700;
+    color: #9E7D3B;
+    margin-bottom: 2px;
+    text-transform: uppercase;
+}
+
+.ws-cart-item-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111111;
+    margin: 0 0 4px;
+}
+
+.ws-cart-item-sku {
+    font-size: 11px;
+    color: #888888;
+    margin-bottom: 3px;
+}
+
+.ws-cart-item-specs {
+    font-size: 11.5px;
+    color: #666666;
+    margin-bottom: 4px;
+}
+
+.ws-cart-stock-status {
+    font-size: 11.5px;
+    color: #2E7D32;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.ws-cart-unit-price {
+    font-size: 14px;
+    font-weight: 500;
+    color: #222222;
+}
+
+/* Bộ chọn số lượng [ - 1 + ] */
+.ws-qty-control {
+    display: inline-flex;
+    align-items: center;
+    border: 1px solid #D8D8D8;
+    border-radius: 3px;
+    background: #FFFFFF;
+}
+
+.ws-qty-btn {
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #333333;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+    .ws-qty-btn:hover {
+        background-color: #F0F0F0;
+        color: #000000;
+    }
+
+.ws-qty-val {
+    width: 32px;
+    text-align: center;
+    font-size: 13px;
+    font-weight: 600;
+    color: #111111;
+}
+
+.ws-cart-row-total {
+    font-size: 14.5px;
+    font-weight: 700;
+    color: #111111;
+}
+
+.ws-cart-del-btn {
+    background: transparent;
+    border: none;
+    color: #999999;
+    font-size: 15px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+    .ws-cart-del-btn:hover {
+        color: #C0392B;
+    }
+
+/* Các nút điều hướng dưới bảng */
+.ws-cart-bottom-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 24px;
+}
+
+.ws-btn-continue {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: #111111;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ws-btn-clear-all {
+    padding: 8px 18px;
+    border: 1px solid #D8D8D8;
+    border-radius: 3px;
+    background: #FFFFFF;
+    font-size: 13px;
+    font-weight: 500;
+    color: #333333;
+    cursor: pointer;
+}
+
+    .ws-btn-clear-all:hover {
+        background-color: #F7F7F7;
+        border-color: #B0B0B0;
+    }
+
+/* Hộp liên hệ hỗ trợ */
+.ws-support-card {
+    background: #F9F9F8;
+    border: 1px solid #EEEEEE;
+    border-radius: 4px;
+    padding: 16px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.ws-support-info {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-size: 13px;
+    color: #444444;
+}
+
+.ws-support-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: #9E7D3B;
+}
+
+/* CỘT PHẢI: TÓM TẮT ĐƠN HÀNG */
+.ws-summary-box {
+    background: #FFFFFF;
+    border: 1px solid #EBEBEB;
+    border-radius: 4px;
+    padding: 26px;
+    position: sticky;
+    top: 90px;
+}
+
+.ws-summary-title-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #F0F0F0;
+}
+
+.ws-summary-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #111111;
+    margin: 0;
+}
+
+.ws-summary-item-cnt {
+    font-size: 12px;
+    color: #888888;
+}
+
+/* Áp dụng Voucher */
+.ws-voucher-form {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.ws-voucher-input {
+    flex: 1;
+    height: 38px;
+    border: 1px solid #CCCCCC;
+    border-radius: 3px;
+    padding: 0 12px;
+    font-size: 13px;
+    text-transform: uppercase;
+    outline: none;
+}
+
+    .ws-voucher-input:focus {
+        border-color: #9E7D3B;
+    }
+
+.ws-btn-apply-voucher {
+    background: #111111;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 3px;
+    padding: 0 18px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.ws-voucher-badge {
+    font-size: 11.5px;
+    color: #2E7D32;
+    margin-bottom: 16px;
+    display: block;
+}
+
+/* Checkbox Dùng Điểm Tích Lũy */
+.ws-points-box {
+    background: #FDF9F0;
+    border: 1px solid #EADBBA;
+    border-radius: 4px;
+    padding: 12px 14px;
+    margin-bottom: 20px;
+    font-size: 12.5px;
+    color: #5C4B22;
+}
+
+    .ws-points-box label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        font-weight: 500;
+    }
+
+.ws-points-sub {
+    font-size: 11.5px;
+    color: #8A6D3B;
+    margin: 4px 0 0 22px;
+}
+
+/* Bảng phân bổ giá */
+.ws-price-breakdown {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 24px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid #EEEEEE;
+    font-size: 13.5px;
+}
+
+.ws-price-row {
+    display: flex;
+    justify-content: space-between;
+    color: #555555;
+}
+
+.ws-discount-val {
+    color: #C0392B;
+    font-weight: 600;
+}
+
+.ws-free-val {
+    color: #2E7D32;
+    font-weight: 500;
+}
+
+.ws-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 20px;
+}
+
+.ws-total-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #111111;
+}
+
+.ws-final-price {
+    font-size: 24px;
+    font-weight: 700;
+    color: #9E7D3B;
+    line-height: 1;
+}
+
+.ws-vat-note {
+    font-size: 11px;
+    color: #888888;
+    text-align: right;
+    margin-top: 4px;
+}
+
+/* Nút Tiến Hành Đặt Hàng */
+.ws-btn-checkout {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    width: 100%;
+    height: 48px;
+    background-color: #1A1A1A;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 3px;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+    .ws-btn-checkout:hover {
+        background-color: #000000;
+    }
+
+.ws-secure-badge {
+    text-align: center;
+    margin-top: 16px;
+    font-size: 11.5px;
+    color: #888888;
+}
+
+.ws-payment-icons {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.ws-badge-card {
+    padding: 3px 8px;
+    border: 1px solid #E0E0E0;
+    border-radius: 3px;
+    font-size: 10px;
+    color: #666666;
+    font-weight: 600;
+}
+
+/* ================= GIAO DIỆN CHECKOUT (DATHANG.CSHTML) ================= */
+.ws-checkout-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 390px;
+    gap: 32px;
+    align-items: start;
+}
+
+.ws-checkout-panel {
+    background: #FFFFFF;
+    border: 1px solid #EBEBEB;
+    border-radius: 4px;
+    padding: 24px;
+}
+
+.ws-panel-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.ws-num-circle {
+    font-size: 13px;
+    font-weight: 700;
+    color: #9E7D3B;
+}
+
+.ws-panel-title {
+    font-size: 17px;
+    font-weight: 600;
+    color: #111111;
+    margin: 0;
+}
+
+.ws-form-group {
+    margin-bottom: 16px;
+}
+
+.ws-form-label {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 500;
+    color: #333333;
+    margin-bottom: 6px;
+}
+
+.ws-input {
+    width: 100%;
+    height: 40px;
+    border: 1px solid #D8D8D8;
+    border-radius: 3px;
+    padding: 0 12px;
+    font-size: 13.5px;
+    color: #222222;
+    outline: none;
+    box-sizing: border-box;
+}
+
+    .ws-input:focus {
+        border-color: #9E7D3B;
+    }
+
+.ws-form-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+/* Lựa chọn Vận chuyển & Thanh toán */
+.ws-method-card {
+    border: 1px solid #E0E0E0;
+    border-radius: 4px;
+    padding: 16px;
+    margin-bottom: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+    .ws-method-card.selected {
+        border-color: #9E7D3B;
+        background-color: #FDFCF8;
+    }
+
+.ws-method-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ws-method-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: #222222;
+    cursor: pointer;
+}
+
+.ws-qr-box {
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px dashed #E0E0E0;
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.ws-qr-img {
+    width: 80px;
+    height: 80px;
+    border: 1px solid #D4D4D4;
+    padding: 4px;
+}
+
+/* Responsive */
+@media (max-width: 1100px) {
+    .ws-checkout-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .ws-cart-grid {
+        grid-template-columns: 1fr;
+    }
+}

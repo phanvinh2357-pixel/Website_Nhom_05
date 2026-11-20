@@ -212,6 +212,7 @@
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\bootstrap.rtl.css" />
     <Content Include="Content\css\bootstrap.rtl.min.css" />
+    <Content Include="Content\css\giohang.css" />
     <Content Include="Content\css\Style.css" />
     <Content Include="Content\HinhAnhSP\EFB-109D-4AV.jpg" />
     <Content Include="Content\HinhAnhSP\EFB-730D-2BV.jpg" />

@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace Website_Nhom_05.Controllers
 {
-    public class DongHoController : Controller
+    public partial class DongHoController : Controller
     {
         // GET: DongHo
         public ActionResult Index()

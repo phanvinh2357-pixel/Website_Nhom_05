@@ -1,7 +1,237 @@
-﻿
+﻿@using Website_Nhom_05.Models
+@model List<CartItem>
+
 @{
-    ViewBag.Title = "GioHang";
+    ViewBag.Title = "Giỏ hàng của bạn · WATCH STORE";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    decimal tamTinh = Model != null ? Model.Sum(n => n.ThanhTien) : 0m;
+    decimal giamGiaVoucher = Session["GiamGiaVoucher"] != null ? (decimal)Session["GiamGiaVoucher"] : 0m;
+    bool dungDiem = Session["DungDiem"] != null && (bool)Session["DungDiem"];
+    decimal giamGiaDiem = dungDiem ? 150000m : 0m;
+    decimal tongThanhToan = Math.Max(0, tamTinh - giamGiaVoucher - giamGiaDiem);
+    int tongSoLuong = Model != null ? Model.Sum(n => n.SoLuong) : 0;
 }
 
-<h2>GioHang</h2>
+<!-- Nhúng CSS chuyên biệt cho phân hệ giỏ hàng -->
+<link rel="stylesheet" href="@Url.Content("~/Content/css/giohang.css")" />
 
+<div class="ws-cart-page">
+    <div class="ws-container">
+        <!-- Breadcrumb -->
+        <div class="ws-cart-breadcrumb">
+            Trang chủ / Giỏ hàng của bạn (@tongSoLuong sản phẩm)
+        </div>
+
+        <!-- Tiêu đề & Stepper -->
+        <div class="ws-cart-header-row">
+            <div>
+                <h1 class="ws-cart-title">Giỏ hàng của bạn</h1>
+                <p class="ws-cart-subtitle">@tongSoLuong sản phẩm được chọn</p>
+            </div>
+
+            <!-- Stepper 3 bước -->
+            <div class="ws-stepper">
+                <div class="ws-step active">
+                    <span class="ws-step-num">1</span>
+                    <span>Giỏ hàng</span>
+                </div>
+                <span class="ws-step-arrow">&rarr;</span>
+                <div class="ws-step">
+                    <span class="ws-step-num">2</span>
+                    <span>Thanh toán & Giao hàng</span>
+                </div>
+                <span class="ws-step-arrow">&rarr;</span>
+                <div class="ws-step">
+                    <span class="ws-step-num">3</span>
+                    <span>Hoàn tất</span>
+                </div>
+            </div>
+        </div>
+
+        @if (Model == null || Model.Count == 0)
+        {
+            <div class="ws-cart-table-wrap text-center" style="padding: 60px 20px;">
+                <p style="font-size: 16px; color: #777; margin-bottom: 20px;">Giỏ hàng của bạn hiện đang trống.</p>
+                <a href="@Url.Action("Index", "DongHo")" class="ws-btn-hero" style="display: inline-block;">Khám phá sản phẩm ngay</a>
+            </div>
+        }
+        else
+        {
+            <div class="ws-cart-grid">
+                <!-- CỘT TRÁI: BẢNG SẢN PHẨM -->
+                <div class="ws-cart-left">
+                    <div class="ws-cart-table-wrap">
+                        <div class="ws-cart-table-header">
+                            <div>Sản phẩm</div>
+                            <div>Đơn giá</div>
+                            <div class="text-center">Số lượng</div>
+                            <div>Thành tiền</div>
+                            <div class="text-center">Thao tác</div>
+                        </div>
+
+                        @foreach (var item in Model)
+                        {
+                            <div class="ws-cart-row">
+                                <!-- Chi tiết sản phẩm -->
+                                <div class="ws-cart-item-info">
+                                    <div class="ws-cart-thumb">
+                                        <img src="@Url.Content("~/Content/HinhAnhSP/" + item.HinhAnh)"
+                                             onerror="this.src='https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=200';"
+                                             alt="@item.TenDongHo" />
+                                    </div>
+                                    <div>
+                                        <div class="ws-cart-brand-tag">@item.TenThuongHieu</div>
+                                        <h3 class="ws-cart-item-name">@item.TenDongHo</h3>
+                                        <div class="ws-cart-item-sku">@item.MaSanPham</div>
+                                        <div class="ws-cart-item-specs">@item.ThongSoNgan</div>
+                                        <div class="ws-cart-stock-status">
+                                            <span>&bull;</span> Có sẵn &middot; Sẵn sàng giao
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Đơn giá -->
+                                <div class="ws-cart-unit-price">
+                                    @String.Format("{0:0,0}", item.GiaBan) VNĐ
+                                </div>
+
+                                <!-- Bộ nút tăng giảm [ - 1 + ] -->
+                                <div class="text-center">
+                                    <div class="ws-qty-control">
+                                        <a href="@Url.Action("CapNhatSoLuong", "GioHang", new { id = item.MaDongHo, step = -1 })" class="ws-qty-btn">&minus;</a>
+                                        <span class="ws-qty-val">@item.SoLuong</span>
+                                        <a href="@Url.Action("CapNhatSoLuong", "GioHang", new { id = item.MaDongHo, step = 1 })" class="ws-qty-btn">&#43;</a>
+                                    </div>
+                                </div>
+
+                                <!-- Thành tiền -->
+                                <div class="ws-cart-row-total">
+                                    @String.Format("{0:0,0}", item.ThanhTien) VNĐ
+                                </div>
+
+                                <!-- Nút xóa -->
+                                <div class="text-center">
+                                    <a href="@Url.Action("XoaMatHang", "GioHang", new { id = item.MaDongHo })"
+                                       class="ws-cart-del-btn"
+                                       onclick="return confirm('Xóa sản phẩm này khỏi giỏ hàng?');"
+                                       title="Xóa">
+                                        &#128465;
+                                    </a>
+                                </div>
+                            </div>
+                        }
+
+                        <!-- Nút điều hướng dưới bảng -->
+                        <div class="ws-cart-bottom-actions">
+                            <a href="@Url.Action("Index", "DongHo")" class="ws-btn-continue">
+                                &larr; Tiếp tục mua sắm
+                            </a>
+                            <a href="@Url.Action("XoaTatCa", "GioHang")"
+                               class="ws-btn-clear-all"
+                               onclick="return confirm('Bạn có chắc chắn muốn làm rỗng giỏ hàng?');">
+                                Xóa tất cả
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Hotline hỗ trợ -->
+                    <div class="ws-support-card">
+                        <div class="ws-support-info">
+                            <span style="font-size: 20px;">&#127911;</span>
+                            <div>
+                                <strong>Cần tư vấn thêm về chiếc đồng hồ của bạn?</strong><br />
+                                <span style="color: #666;">Gọi 1900 6868 &middot; Chuyên viên của chúng tôi luôn sẵn sàng hỗ trợ.</span>
+                            </div>
+                        </div>
+                        <a href="tel:19006868" class="ws-support-link">Liên hệ ngay &rarr;</a>
+                    </div>
+                </div>
+
+                <!-- CỘT PHẢI: TÓM TẮT ĐƠN HÀNG -->
+                <div class="ws-summary-box">
+                    <div class="ws-summary-title-wrap">
+                        <h2 class="ws-summary-title">Tóm tắt đơn hàng</h2>
+                        <span class="ws-summary-item-cnt">@tongSoLuong sản phẩm</span>
+                    </div>
+
+                    <!-- Ô nhập mã giảm giá -->
+                    <label style="font-size: 12px; font-weight: 600; color: #444; margin-bottom: 6px; display: block;">Mã giảm giá</label>
+                    @using (Html.BeginForm("ApDungVoucher", "GioHang", FormMethod.Post, new { @class = "ws-voucher-form" }))
+                    {
+                        <input type="text" name="maVoucher" class="ws-voucher-input" placeholder="Nhập mã (ví dụ: WATCH500)" value="@Session["VoucherCode"]" />
+                        <button type="submit" class="ws-btn-apply-voucher">Áp dụng</button>
+                    }
+                    @if (Session["VoucherCode"] != null)
+                    {
+                        <span class="ws-voucher-badge">&#10003; Đã áp dụng WATCH500 &middot; Giảm 500.000 VNĐ</span>
+                    }
+
+                    <!-- Checkbox dùng điểm tích lũy -->
+                    <div class="ws-points-box">
+                        @using (Html.BeginForm("SuDungDiem", "GioHang", FormMethod.Post, new { id = "formPoints" }))
+                        {
+                            <label>
+                                <input type="checkbox" name="dungDiem" value="true" @(dungDiem ? "checked" : "") onchange="document.getElementById('formPoints').submit();" />
+                                Dùng điểm tích lũy (Bạn có 150 điểm = 150.000 VNĐ)
+                            </label>
+                            if (dungDiem)
+                            {
+                                <div class="ws-points-sub">Đã trừ 150.000 VNĐ vào đơn hàng</div>
+                            }
+                        }
+                    </div>
+
+                    <!-- Bảng tính tiền -->
+                    <div class="ws-price-breakdown">
+                        <div class="ws-price-row">
+                            <span>Tạm tính</span>
+                            <span>@String.Format("{0:0,0}", tamTinh) VNĐ</span>
+                        </div>
+                        @if (giamGiaVoucher > 0)
+                        {
+                            <div class="ws-price-row">
+                                <span>Giảm giá voucher</span>
+                                <span class="ws-discount-val">-@String.Format("{0:0,0}", giamGiaVoucher) VNĐ</span>
+                            </div>
+                        }
+                        @if (giamGiaDiem > 0)
+                        {
+                            <div class="ws-price-row">
+                                <span>Điểm tích lũy</span>
+                                <span class="ws-discount-val">-@String.Format("{0:0,0}", giamGiaDiem) VNĐ</span>
+                            </div>
+                        }
+                        <div class="ws-price-row">
+                            <span>Phí vận chuyển</span>
+                            <span class="ws-free-val">Miễn phí (0 VNĐ)</span>
+                        </div>
+                    </div>
+
+                    <!-- Tổng thanh toán -->
+                    <div class="ws-total-row">
+                        <div class="ws-total-label">Tổng thanh toán</div>
+                        <div>
+                            <div class="ws-final-price">@String.Format("{0:0,0}", tongThanhToan) VNĐ</div>
+                            <div class="ws-vat-note">Đã bao gồm thuế VAT</div>
+                        </div>
+                    </div>
+
+                    <!-- Nút tiến hành đặt hàng -->
+                    <a href="@Url.Action("DatHang", "GioHang")" class="ws-btn-checkout">
+                        Tiến hành đặt hàng &rarr;
+                    </a>
+
+                    <div class="ws-secure-badge">
+                        &#128274; Thông tin thanh toán được mã hóa & bảo mật
+                        <div class="ws-payment-icons">
+                            <span class="ws-badge-card">VISA</span>
+                            <span class="ws-badge-card">MASTERCARD</span>
+                            <span class="ws-badge-card">JCB</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

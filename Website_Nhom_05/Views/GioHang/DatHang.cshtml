@@ -1,7 +1,273 @@
-﻿
+﻿@using Website_Nhom_05.Models
+@model List<CartItem>
+
 @{
-    ViewBag.Title = "DatHang";
+    ViewBag.Title = "Thanh toán & Đặt hàng · WATCH STORE";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    // Khai báo biến kh ở đầu trang để toàn bộ View bên dưới đều dùng được
+    KhachHang kh = (Session["KhachHang"] as KhachHang) ?? (ViewBag.KhachHang as KhachHang);
+
+    decimal tamTinh = Model != null ? Model.Sum(n => n.ThanhTien) : 0m;
+    decimal giamGiaVoucher = Session["GiamGiaVoucher"] != null ? (decimal)Session["GiamGiaVoucher"] : 0m;
+    bool dungDiem = Session["DungDiem"] != null && (bool)Session["DungDiem"];
+    decimal giamGiaDiem = dungDiem ? 150000m : 0m;
+    decimal tongThanhToan = Math.Max(0, tamTinh - giamGiaVoucher - giamGiaDiem);
+    int tongSoLuong = Model != null ? Model.Sum(n => n.SoLuong) : 0;
 }
 
-<h2>DatHang</h2>
+<link rel="stylesheet" href="@Url.Content("~/Content/css/giohang.css")" />
 
+<div class="ws-cart-page">
+    <div class="ws-container">
+        <!-- Tiêu đề & Stepper -->
+        <div class="ws-cart-header-row" style="margin-bottom: 20px;">
+            <div>
+                <h1 class="ws-cart-title">Thanh toán & Đặt hàng</h1>
+                <p class="ws-cart-subtitle">Chỉ một bước nữa, những cỗ máy thời gian sẽ đến với bạn.</p>
+            </div>
+
+            <div class="ws-stepper">
+                <div class="ws-step">
+                    <span class="ws-step-num">1</span>
+                    <span>Giỏ hàng</span>
+                </div>
+                <span class="ws-step-arrow">&rarr;</span>
+                <div class="ws-step active">
+                    <span class="ws-step-num">2</span>
+                    <span>Thanh toán & Giao hàng</span>
+                </div>
+                <span class="ws-step-arrow">&rarr;</span>
+                <div class="ws-step">
+                    <span class="ws-step-num">3</span>
+                    <span>Hoàn tất</span>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-bottom: 24px;">
+            <a href="@Url.Action("GioHang", "GioHang")" style="font-size: 13.5px; color: #666; text-decoration: none;">&larr; Quay lại giỏ hàng</a>
+        </div>
+
+        @using (Html.BeginForm("DatHang", "GioHang", FormMethod.Post))
+        {
+            <div class="ws-checkout-grid">
+                <!-- KHỐI 1: THÔNG TIN GIAO HÀNG -->
+                <div class="ws-checkout-panel">
+                    <div class="ws-panel-header">
+                        <span class="ws-num-circle">01</span>
+                        <h2 class="ws-panel-title">Thông tin giao hàng</h2>
+                    </div>
+                    <p style="font-size: 11.5px; color: #888; margin-bottom: 16px;">* Thông tin bắt buộc để giao hàng chính xác</p>
+
+                    <div class="ws-form-group">
+                        <label class="ws-form-label">Họ và tên *</label>
+                        <input type="text" name="HoTen" class="ws-input" required value="@(kh != null ? kh.HoTen : "Nguyễn Minh Anh")" />
+                    </div>
+
+                    <div class="ws-form-row-2">
+                        <div class="ws-form-group">
+                            <label class="ws-form-label">Số điện thoại *</label>
+                            <input type="text" name="SoDienThoai" class="ws-input" required value="@(kh != null ? kh.SoDienThoai : "0901234567")" />
+                        </div>
+                        <div class="ws-form-group">
+                            <label class="ws-form-label">Email *</label>
+                            <input type="email" name="Email" class="ws-input" required value="minhanh@gmail.com" />
+                        </div>
+                    </div>
+
+                    <div class="ws-form-group">
+                        <label class="ws-form-label">Tỉnh/Thành phố *</label>
+                        <select name="TinhThanh" class="ws-input">
+                            <option value="TP. Hồ Chí Minh" selected>TP. Hồ Chí Minh</option>
+                            <option value="Hà Nội">Hà Nội</option>
+                            <option value="Đà Nẵng">Đà Nẵng</option>
+                        </select>
+                    </div>
+
+                    <div class="ws-form-row-2">
+                        <div class="ws-form-group">
+                            <label class="ws-form-label">Quận/Huyện *</label>
+                            <select name="QuanHuyen" class="ws-input">
+                                <option value="Quận 1" selected>Quận 1</option>
+                                <option value="Quận Tân Phú">Quận Tân Phú</option>
+                                <option value="Quận 3">Quận 3</option>
+                            </select>
+                        </div>
+                        <div class="ws-form-group">
+                            <label class="ws-form-label">Phường/Xã *</label>
+                            <select name="PhuongXa" class="ws-input">
+                                <option value="Bến Nghé" selected>Bến Nghé</option>
+                                <option value="Tây Thạnh">Tây Thạnh</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="ws-form-group">
+                        <label class="ws-form-label">Địa chỉ nhà chi tiết *</label>
+                        <input type="text" name="DiaChiChiTiet" class="ws-input" placeholder="Số nhà, tên đường, tòa nhà / căn hộ" required value="@(kh != null && !string.IsNullOrEmpty(kh.DiaChi) ? kh.DiaChi : "140 Lê Trọng Tấn")" />
+                    </div>
+
+                    <div class="ws-form-group">
+                        <label class="ws-form-label">Ghi chú đơn hàng (không bắt buộc)</label>
+                        <textarea name="GhiChu" class="ws-input" style="height: 80px; padding: 8px 12px;" placeholder="Ví dụ: giao giờ hành chính, gọi trước khi giao"></textarea>
+                    </div>
+
+                    <div style="font-size: 11.5px; color: #888; display: flex; align-items: center; gap: 6px;">
+                        &#128737; Thông tin của bạn chỉ được sử dụng để xử lý và giao đơn hàng, luôn được bảo mật.
+                    </div>
+                </div>
+
+                <!-- KHỐI 2: VẬN CHUYỂN & PHƯƠNG THỨC THANH TOÁN -->
+                <div class="ws-checkout-panel">
+                    <div class="ws-panel-header">
+                        <span class="ws-num-circle">02</span>
+                        <h2 class="ws-panel-title">Vận chuyển</h2>
+                    </div>
+
+                    <div class="ws-method-card selected">
+                        <div class="ws-method-top">
+                            <label class="ws-method-label">
+                                <input type="radio" name="VanChuyen" value="TieuChuan" checked />
+                                Giao hàng tiêu chuẩn
+                            </label>
+                            <span>&#128666;</span>
+                        </div>
+                        <div style="font-size: 12px; color: #666; margin-left: 24px; margin-top: 4px;">
+                            Miễn phí &middot; Dự kiến 2&ndash;3 ngày
+                        </div>
+                    </div>
+
+                    <div class="ws-panel-header" style="margin-top: 28px;">
+                        <span class="ws-num-circle">03</span>
+                        <h2 class="ws-panel-title">Phương thức thanh toán</h2>
+                    </div>
+
+                    <!-- COD -->
+                    <div class="ws-method-card">
+                        <label class="ws-method-label">
+                            <input type="radio" name="PhuongThucThanhToan" value="COD" />
+                            Thanh toán khi nhận hàng (COD)
+                        </label>
+                        <div style="font-size: 12px; color: #777; margin-left: 24px; margin-top: 2px;">
+                            Thanh toán tiền mặt khi nhận đồng hồ
+                        </div>
+                    </div>
+
+                    <!-- VNPAY -->
+                    <div class="ws-method-card selected">
+                        <div class="ws-method-top">
+                            <label class="ws-method-label">
+                                <input type="radio" name="PhuongThucThanhToan" value="VNPAY" checked />
+                                Thanh toán trực tuyến qua VNPAY
+                            </label>
+                            <span style="font-size: 12px; font-weight: 700; color: #005BAA;">VNPAY</span>
+                        </div>
+                        <div class="ws-qr-box">
+                            <img src="https://api.qrserver.com/v1/create-qr-code/?size=100x100&data=WATCHSTORE_VNPAY_PAYMENT" class="ws-qr-img" alt="QR Code" />
+                            <div style="font-size: 12px; color: #666;">
+                                <strong>Quét QR bằng ứng dụng ngân hàng</strong> hoặc thẻ ATM/Visa.<br />
+                                <span style="font-size: 11px; color: #999;">QR minh họa &middot; Không dùng để thanh toán thực tế</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- MOMO -->
+                    <div class="ws-method-card">
+                        <div class="ws-method-top">
+                            <label class="ws-method-label">
+                                <input type="radio" name="PhuongThucThanhToan" value="MOMO" />
+                                Ví điện tử MoMo
+                            </label>
+                            <span style="background: #A50064; color: #FFF; padding: 2px 6px; border-radius: 3px; font-size: 10px; font-weight: 700;">MoMo</span>
+                        </div>
+                    </div>
+
+                    <!-- Chuyển khoản trực tiếp -->
+                    <div class="ws-method-card">
+                        <label class="ws-method-label">
+                            <input type="radio" name="PhuongThucThanhToan" value="ChuyenKhoan" />
+                            Chuyển khoản ngân hàng trực tiếp
+                        </label>
+                    </div>
+                </div>
+
+                <!-- KHỐI 3: ĐƠN HÀNG CỦA BẠN -->
+                <div class="ws-summary-box">
+                    <div class="ws-summary-title-wrap">
+                        <h2 class="ws-summary-title">Đơn hàng của bạn</h2>
+                        <span class="ws-summary-item-cnt">@tongSoLuong sản phẩm</span>
+                    </div>
+
+                    <div style="max-height: 240px; overflow-y: auto; margin-bottom: 18px;">
+                        @foreach (var item in Model)
+                        {
+                            <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 12px;">
+                                <div style="width: 48px; height: 58px; background: #FFF; border: 1px solid #EBEBEB; padding: 2px; flex-shrink: 0;">
+                                    <img src="@Url.Content("~/Content/HinhAnhSP/" + item.HinhAnh)" style="width: 100%; height: 100%; object-fit: contain;" alt="@item.TenDongHo" />
+                                </div>
+                                <div style="flex: 1;">
+                                    <div style="font-size: 10px; font-weight: 700; color: #9E7D3B;">@item.TenThuongHieu</div>
+                                    <div style="font-size: 13px; font-weight: 600; color: #222;">@item.TenDongHo</div>
+                                    <div style="font-size: 11.5px; color: #888;">x@item.SoLuong</div>
+                                </div>
+                                <div style="font-size: 13px; font-weight: 700; color: #111;">
+                                    @String.Format("{0:0,0}", item.ThanhTien) VNĐ
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    @if (Session["VoucherCode"] != null)
+                    {
+                        <div style="background: #FDFBF7; border: 1px dashed #9E7D3B; padding: 8px 12px; border-radius: 3px; font-size: 12px; margin-bottom: 16px; display: flex; justify-content: space-between;">
+                            <span><strong>WATCH500</strong> &middot; Giảm 500k</span>
+                            <span style="color: #2E7D32;">Đã áp dụng</span>
+                        </div>
+                    }
+
+                    <div class="ws-price-breakdown">
+                        <div class="ws-price-row">
+                            <span>Tạm tính</span>
+                            <span>@String.Format("{0:0,0}", tamTinh) VNĐ</span>
+                        </div>
+                        @if (giamGiaVoucher > 0)
+                        {
+                            <div class="ws-price-row">
+                                <span>Giảm giá voucher</span>
+                                <span class="ws-discount-val">-@String.Format("{0:0,0}", giamGiaVoucher) VNĐ</span>
+                            </div>
+                        }
+                        @if (giamGiaDiem > 0)
+                        {
+                            <div class="ws-price-row">
+                                <span>Điểm tích lũy</span>
+                                <span class="ws-discount-val">-@String.Format("{0:0,0}", giamGiaDiem) VNĐ</span>
+                            </div>
+                        }
+                        <div class="ws-price-row">
+                            <span>Phí giao hàng</span>
+                            <span class="ws-free-val">Miễn phí (0 VNĐ)</span>
+                        </div>
+                    </div>
+
+                    <div class="ws-total-row">
+                        <div class="ws-total-label">Tổng số tiền thanh toán</div>
+                        <div>
+                            <div class="ws-final-price">@String.Format("{0:0,0}", tongThanhToan) VNĐ</div>
+                            <div class="ws-vat-note">Đã bao gồm thuế VAT</div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="ws-btn-checkout">
+                        Xác nhận đặt hàng &rarr;
+                    </button>
+
+                    <div style="font-size: 11px; color: #888; text-align: center; margin-top: 12px;">
+                        Bằng việc bấm đặt hàng, bạn đồng ý với <a href="#" style="text-decoration: underline;">Điều khoản mua sắm</a> của chúng tôi.
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -1,7 +1,61 @@
-﻿
-@{
-    ViewBag.Title = "XacNhanDonHang";
+﻿@{
+    ViewBag.Title = "Đặt hàng thành công · WATCH STORE";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>XacNhanDonHang</h2>
+<link rel="stylesheet" href="@Url.Content("~/Content/css/giohang.css")" />
 
+<div class="ws-cart-page">
+    <div class="ws-container">
+        <!-- Stepper: Bước 3 active -->
+        <div class="ws-cart-header-row" style="justify-content: center; margin-bottom: 40px;">
+            <div class="ws-stepper">
+                <div class="ws-step">
+                    <span class="ws-step-num">&#10003;</span>
+                    <span>Giỏ hàng</span>
+                </div>
+                <span class="ws-step-arrow">&rarr;</span>
+                <div class="ws-step">
+                    <span class="ws-step-num">&#10003;</span>
+                    <span>Thanh toán & Giao hàng</span>
+                </div>
+                <span class="ws-step-arrow">&rarr;</span>
+                <div class="ws-step active">
+                    <span class="ws-step-num">3</span>
+                    <span>Hoàn tất</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="ws-cart-table-wrap text-center" style="max-width: 680px; margin: 0 auto; padding: 50px 30px;">
+            <div style="width: 70px; height: 70px; background: #F4F8F4; border-radius: 50%; color: #2E7D32; font-size: 36px; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px;">
+                &#10003;
+            </div>
+
+            <h1 style="font-family: var(--ws-font-serif); font-size: 32px; color: #111; margin-bottom: 10px;">Đặt Hàng Thành Công!</h1>
+            <p style="font-size: 14.5px; color: #666; line-height: 1.6; margin-bottom: 24px;">
+                Cảm ơn bạn đã lựa chọn WATCH STORE. Đơn hàng của bạn đã được ghi nhận vào hệ thống và đang trong quá trình đóng gói cẩn thận.
+            </p>
+
+            <div style="background: #FAFAFA; border: 1px solid #EBEBEB; border-radius: 4px; padding: 20px; margin-bottom: 30px; text-align: left;">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    <span style="color: #666; font-size: 13.5px;">Mã đơn hàng:</span>
+                    <strong style="font-size: 14px; color: #111;">#@ViewBag.MaDonHang</strong>
+                </div>
+                <div style="display: flex; justify-content: space-between;">
+                    <span style="color: #666; font-size: 13.5px;">Tổng thanh toán:</span>
+                    <strong style="font-size: 16px; color: #9E7D3B;">@String.Format("{0:0,0}", ViewBag.TongTien) VNĐ</strong>
+                </div>
+            </div>
+
+            <div style="display: flex; gap: 16px; justify-content: center;">
+                <a href="@Url.Action("Index", "Home")" class="ws-btn-hero" style="font-size: 13px; padding: 12px 28px;">
+                    Về trang chủ
+                </a>
+                <a href="@Url.Action("LichSuDonHang", "DonHang")" class="ws-btn-clear-all" style="font-size: 13px; padding: 12px 24px; text-decoration: none;">
+                    Xem lịch sử đơn hàng
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
