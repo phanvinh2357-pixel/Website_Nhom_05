@@ -1,7 +1,11 @@
-﻿
+﻿@using Website_Nhom_05.Models
+@using PagedList
+@model IPagedList<DongHo>
+
 @{
-    ViewBag.Title = "DongHoTheoLoai";
+    ViewBag.Title = "Danh mục đồng hồ";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>DongHoTheoLoai</h2>
-
+<link rel="stylesheet" href="@Url.Content("~/Content/css/danhmuc.css")" />
+@Html.Partial("_DanhMuc", Model)

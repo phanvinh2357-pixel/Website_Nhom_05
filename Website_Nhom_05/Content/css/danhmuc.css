@@ -1,0 +1,47 @@
+/* Danh mục sản phẩm, bộ lọc, tìm kiếm - Nguyễn Thị Anh Thư */
+.dm-page { padding: 24px 0 60px; }
+.dm-breadcrumb { font-size: 14px; color: #737373; margin-bottom: 16px; }
+.dm-breadcrumb a { color: #737373; text-decoration: none; }
+.dm-breadcrumb a:hover { color: #D4AF37; }
+.dm-breadcrumb span { margin: 0 6px; }
+.dm-heading h1 { font-family: 'Playfair Display', Georgia, serif; font-size: 32px; margin: 0 0 4px; }
+.dm-heading p { color: #737373; margin-bottom: 24px; }
+
+.dm-layout { display: grid; grid-template-columns: 260px 1fr; gap: 32px; align-items: start; }
+.dm-sidebar { border: 1px solid #EEEEEE; padding: 20px; background: #FBFBFA; }
+.dm-sidebar h3 { font-size: 18px; margin: 0 0 16px; }
+.dm-filter-group { margin-bottom: 20px; }
+.dm-filter-group h4 { font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: #1A1A1A; margin-bottom: 8px; }
+.dm-filter-group label { display: block; font-size: 14px; margin-bottom: 6px; cursor: pointer; }
+.dm-filter-group input { margin-right: 8px; accent-color: #D4AF37; }
+.dm-btn { width: 100%; background: #D4AF37; color: #fff; border: 0; padding: 10px; font-weight: 600; cursor: pointer; }
+.dm-btn:hover { background: #BA9624; }
+.dm-reset { display: block; text-align: center; margin-top: 10px; font-size: 13px; color: #737373; }
+
+.dm-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; font-size: 14px; color: #737373; }
+.dm-toolbar select { padding: 8px 12px; border: 1px solid #DDD; background: #fff; }
+
+.dm-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.dm-card { border: 1px solid #EEEEEE; background: #fff; transition: box-shadow .2s; }
+.dm-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,.08); }
+.dm-img { position: relative; display: block; aspect-ratio: 1 / 1; background: #FBFBFA; overflow: hidden; }
+.dm-img img { width: 100%; height: 100%; object-fit: contain; }
+.dm-badge { position: absolute; top: 10px; left: 10px; background: #1A1A1A; color: #fff; font-size: 12px; padding: 3px 8px; }
+.dm-info { padding: 14px 16px 18px; }
+.dm-brand { display: block; font-size: 12px; color: #D4AF37; text-transform: uppercase; letter-spacing: .08em; }
+.dm-name { display: block; color: #1A1A1A; text-decoration: none; font-weight: 500; margin: 4px 0 8px; min-height: 40px; }
+.dm-name:hover { color: #BA9624; }
+.dm-price { font-weight: 700; font-size: 17px; }
+.dm-empty { padding: 60px 0; text-align: center; color: #737373; }
+
+.dm-pager { margin-top: 32px; text-align: center; }
+.dm-pager ul.pagination { display: inline-flex; list-style: none; padding: 0; gap: 6px; }
+.dm-pager .pagination a, .dm-pager .pagination span { display: block; padding: 7px 13px; border: 1px solid #DDD; color: #1A1A1A; text-decoration: none; }
+.dm-pager .pagination .active a, .dm-pager .pagination .active span { background: #D4AF37; border-color: #D4AF37; color: #fff; }
+.dm-pager .pagination .disabled a, .dm-pager .pagination .disabled span { color: #AAA; }
+
+@media (max-width: 991px) {
+    .dm-layout { grid-template-columns: 1fr; }
+    .dm-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 575px) { .dm-grid { grid-template-columns: 1fr; } }

@@ -1,0 +1,141 @@
+@using Website_Nhom_05.Models
+@using PagedList
+@using PagedList.Mvc
+@model IPagedList<DongHo>
+
+@{
+    var dsLoai = (List<LoaiDongHo>)ViewBag.Loai;
+    var dsTH = (List<ThuongHieu>)ViewBag.ThuongHieu;
+    int[] selLoai = (int[])ViewBag.SelLoai;
+    int[] selTH = (int[])ViewBag.SelThuongHieu;
+    string mucGia = (string)ViewBag.MucGia;
+    bool conHang = (bool)ViewBag.ConHang;
+    string sapXep = (string)ViewBag.SapXep;
+    string act = (string)ViewBag.Action;
+    string tuKhoa = (string)ViewBag.TuKhoa;
+    object idRoute = ViewBag.MaLoai ?? ViewBag.MaThuongHieu;
+}
+
+<div class="dm-page ws-container">
+    <!-- Breadcrumb -->
+    <nav class="dm-breadcrumb">
+        <a href="@Url.Action("Index", "Home")">Trang chủ</a> <span>/</span>
+        <a href="@Url.Action("Index", "DongHo")">Đồng hồ</a>
+        @if (act != "Index")
+        {
+            <span>/</span> <strong>@ViewBag.TieuDe</strong>
+        }
+    </nav>
+
+    <div class="dm-heading">
+        <h1>@ViewBag.TieuDe</h1>
+        @if (act == "TimKiem")
+        {
+            <p>Từ khóa: "<strong>@tuKhoa</strong>" – tìm thấy @Model.TotalItemCount sản phẩm</p>
+        }
+        else
+        {
+            <p>@Model.TotalItemCount sản phẩm</p>
+        }
+    </div>
+
+    <form method="get" action="@Url.Action(act, "DongHo")" class="dm-layout" id="dm-form">
+        @if (idRoute != null) { <input type="hidden" name="id" value="@idRoute" /> }
+        @if (act == "TimKiem") { <input type="hidden" name="tuKhoa" value="@tuKhoa" /> }
+
+        <!-- Sidebar bộ lọc -->
+        <aside class="dm-sidebar">
+            <h3>Bộ lọc</h3>
+
+            @if ((bool)ViewBag.HienLoc_Loai)
+            {
+                <div class="dm-filter-group">
+                    <h4>Loại máy</h4>
+                    @foreach (var l in dsLoai)
+                    {
+                        <label><input type="checkbox" name="loai" value="@l.MaLoai" @(selLoai.Contains(l.MaLoai) ? "checked" : "") /> @l.TenLoai</label>
+                    }
+                </div>
+            }
+
+            @if ((bool)ViewBag.HienLoc_ThuongHieu)
+            {
+                <div class="dm-filter-group">
+                    <h4>Thương hiệu</h4>
+                    @foreach (var t in dsTH)
+                    {
+                        <label><input type="checkbox" name="thuongHieu" value="@t.MaThuongHieu" @(selTH.Contains(t.MaThuongHieu) ? "checked" : "") /> @t.TenThuongHieu</label>
+                    }
+                </div>
+            }
+
+            <div class="dm-filter-group">
+                <h4>Mức giá</h4>
+                <label><input type="radio" name="mucGia" value="" @(string.IsNullOrEmpty(mucGia) ? "checked" : "") /> Tất cả</label>
+                <label><input type="radio" name="mucGia" value="duoi2" @(mucGia == "duoi2" ? "checked" : "") /> Dưới 2 triệu</label>
+                <label><input type="radio" name="mucGia" value="2-5" @(mucGia == "2-5" ? "checked" : "") /> 2 – 5 triệu</label>
+                <label><input type="radio" name="mucGia" value="5-10" @(mucGia == "5-10" ? "checked" : "") /> 5 – 10 triệu</label>
+                <label><input type="radio" name="mucGia" value="tren10" @(mucGia == "tren10" ? "checked" : "") /> Trên 10 triệu</label>
+            </div>
+
+            <div class="dm-filter-group">
+                <h4>Trạng thái</h4>
+                <label><input type="checkbox" name="conHang" value="true" @(conHang ? "checked" : "") /> Chỉ hiện còn hàng</label>
+            </div>
+
+            <button type="submit" class="dm-btn">Áp dụng</button>
+            <a class="dm-reset" href="@Url.Action(act, "DongHo", idRoute != null ? (object)new { id = idRoute, tuKhoa = tuKhoa } : new { tuKhoa = tuKhoa })">Xóa bộ lọc</a>
+        </aside>
+
+        <!-- Lưới sản phẩm -->
+        <section class="dm-content">
+            <div class="dm-toolbar">
+                <span>Hiển thị @Model.FirstItemOnPage – @Model.LastItemOnPage / @Model.TotalItemCount</span>
+                <select name="sapXep" onchange="document.getElementById('dm-form').submit()">
+                    <option value="" @(string.IsNullOrEmpty(sapXep) ? "selected" : "")>Mới nhất</option>
+                    <option value="gia-tang" @(sapXep == "gia-tang" ? "selected" : "")>Giá: thấp đến cao</option>
+                    <option value="gia-giam" @(sapXep == "gia-giam" ? "selected" : "")>Giá: cao đến thấp</option>
+                </select>
+            </div>
+
+            @if (!Model.Any())
+            {
+                <div class="dm-empty">Không tìm thấy sản phẩm phù hợp.</div>
+            }
+            else
+            {
+                <div class="dm-grid">
+                    @foreach (var d in Model)
+                    {
+                        <div class="dm-card">
+                            <a href="@Url.Action("Details", "DongHo", new { id = d.MaDongHo })" class="dm-img">
+                                <img src="@Url.Content("~/Content/HinhAnhSP/" + d.HinhAnh)" alt="@d.TenDongHo"
+                                     onerror="this.src='https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=400&q=70'" />
+                                @if (d.SoLuongTon <= 0) { <span class="dm-badge">Hết hàng</span> }
+                            </a>
+                            <div class="dm-info">
+                                <span class="dm-brand">@d.ThuongHieu.TenThuongHieu</span>
+                                <a href="@Url.Action("Details", "DongHo", new { id = d.MaDongHo })" class="dm-name">@d.TenDongHo</a>
+                                <div class="dm-price">@d.GiaBan.ToString("N0") ₫</div>
+                            </div>
+                        </div>
+                    }
+                </div>
+
+                <div class="dm-pager">
+                    @Html.PagedListPager(Model, p => Url.Action(act, "DongHo", new
+                    {
+                        id = idRoute,
+                        tuKhoa = tuKhoa,
+                        loai = selLoai,
+                        thuongHieu = selTH,
+                        mucGia = mucGia,
+                        conHang = conHang ? (bool?)true : null,
+                        sapXep = sapXep,
+                        page = p
+                    }))
+                </div>
+            }
+        </section>
+    </form>
+</div>

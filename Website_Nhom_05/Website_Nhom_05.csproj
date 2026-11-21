@@ -303,6 +303,8 @@
     <Content Include="Views\DongHo\DongHoTheoLoai.cshtml" />
     <Content Include="Views\DongHo\DongHoTheoThuongHieu.cshtml" />
     <Content Include="Views\DongHo\TimKiem.cshtml" />
+    <Content Include="Views\DongHo\_DanhMuc.cshtml" />
+    <Content Include="Content\css\danhmuc.css" />
     <Content Include="Views\Admin\XoaDongHo.cshtml" />
     <Content Include="Views\Admin\ChiTietDongHo.cshtml" />
   </ItemGroup>
